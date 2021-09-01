@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'RareTechLoveDB',
         'USER': 'RareTechLove',
         'PASSWORD': 'RareTechLove',
-        'HOST': 'localhost',
+        'HOST': 'raretechlovedb.carnklpdqlkr.ap-northeast-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
