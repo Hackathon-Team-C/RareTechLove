@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'RareTechLove.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'RareTechLoveDB',
+        'USER': 'RareTechLove',
+        'PASSWORD': 'RareTechLove',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
