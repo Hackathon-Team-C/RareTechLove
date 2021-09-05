@@ -1,25 +1,57 @@
-# ymlファイルのバージョン指定
-version: '3'
-# コンテナを定義
+version: "3.7"
+ 
 services:
-    web:
-        # Dockerfileをビルド
-        build: .
-        command: python3 manage.py runserver 0.0.0.0:8000
-        # マウント場所の指定
-        volumes:
-            - .:/code
-        ports:
-            - "8000:8000"
-        # dbサービスが立ち上がってから起動するように指定
-        depends_on:
-            - db
-    db:
-        image: postgres
-        restart: always
-        ports: 
-            - "5432"
-        environment:
-          - POSTGRES_DB=postgres
-          - POSTGRES_USER=postgres
-          - POSTGRES_PASSWORD=postgres
+  gunicorn:
+    build: ./django_project
+    container_name: Gunicorn
+    command: gunicorn raretechlove.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    expose:
+      - 8000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - pgadmin4
+ 
+  postgres:
+    image: postgres:13.4-alpine
+    container_name: ProgreSQL13.4
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.dev
+    restart: always
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    ports:
+      - 8001:80
+    volumes:
+      - ./docker/pgadmin4:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@rarelove.com
+      PGADMIN_DEFAULT_PASSWORD: rarelove
+    hostname: pgadmin4
+    depends_on:
+      - postgres
+    restart: always
+ 
+  nginx:
+    build: ./nginx
+    container_name: Nginx
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    ports:
+      - 1317:80
+    depends_on:
+      - gunicorn
+ 
+volumes:
+  postgres_data:
+  # pgadmin4:
+  static_volume:
+  media_volume:
