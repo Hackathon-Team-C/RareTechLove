@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'raretechlove.wsgi.application'
 # ローカル環境用
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get("SQL_DATABASE_DEV"),
         'USER': os.environ.get("SQL_USER_DEV"),
         'PASSWORD': os.environ.get("SQL_PASSWORD_DEV"),

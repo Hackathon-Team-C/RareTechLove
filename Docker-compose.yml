@@ -1,57 +1,127 @@
-version: "3.7"
+version: "3.8"
  
 services:
   gunicorn:
     build: ./django_project
     container_name: Gunicorn
-    command: gunicorn raretechlove.wsgi:application --bind 0.0.0.0:8000
+    # command: gunicorn raretechlove.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn raretechlove.wsgi:application
     volumes:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
-    expose:
-      - 8000
+    # expose:
+    #   - 8000
     env_file:
-      - ./.env.dev
+      # 開発用
+      - .env/.env.dev
+      # 本番用
+      # - .env/.env.proc
     depends_on:
-      - pgadmin4
+      - phpmyadmin
  
-  postgres:
-    image: postgres:13.4-alpine
-    container_name: ProgreSQL13.4
+
+  mysql:
+    build: ./MySQL
+    container_name: MySQL8
+    # command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      # - ./MySQL:/var/mysql
+      - mysql_data:/var/lib/mysql
+      - ./MySQL/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      # - ./data:/var/lib/mysql
+      - ./logs:/var/log/mysql
     env_file:
-      - ./.env.dev
+      # 開発用
+      - .env/.envmysql.dev
+      # 本番用
+      # - .env/.envmysql.proc
+    # ports: 
+    #   - "${MYSQL_PORT_SEC}:${MYSQL_PORT}"
     restart: always
 
-  pgadmin4:
-    image: dpage/pgadmin4
-    container_name: pgadmin4
-    ports:
-      - 8001:80
-    volumes:
-      - ./docker/pgadmin4:/var/lib/pgadmin
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpMyAdmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: root@rarelove.com
-      PGADMIN_DEFAULT_PASSWORD: rarelove
-    hostname: pgadmin4
-    depends_on:
-      - postgres
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=mysql
+      - PMA_USER=RareTECHLove
+      - PMA_PASSWORD=okotyma_is_the_best
+    ports:
+      - "127.0.0.1:3000:80"
+    # links: 
+    #   - "mysql"
+    depends_on: 
+      - mysql
     restart: always
  
-  nginx:
-    build: ./nginx
-    container_name: Nginx
+
+  apache:
+    build: ./Apache-PHP
+    container_name: Apache-PHP
     volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+      - ./django_project/raretechloveapp/templates:/var/www/html
+      # - ./Apache/.conf/:/usr/local/apache2/conf/
+      # - ./html:/var/www/html
     ports:
-      - 1317:80
+      - 1318:80
     depends_on:
       - gunicorn
- 
+
+
 volumes:
-  postgres_data:
+  mysql_data:
+    driver_opts:
+      type: none
+      device: ./MySQL/DataBase
+      o: bind
   # pgadmin4:
   static_volume:
   media_volume:
+
+
+
+  # postgres:
+  #   image: postgres:13.4-alpine
+  #   container_name: ProgreSQL13.4
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data/
+  #   env_file:
+  #     - ./.env.dev
+  #   restart: always
+  # 
+  # 
+  # pgadmin4:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin4
+  #   ports:
+  #     - 8001:80
+  #   volumes:
+  #     - ./docker/pgadmin4:/var/lib/pgadmin
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: root@rarelove.com
+  #     PGADMIN_DEFAULT_PASSWORD: rarelove
+  #   hostname: pgadmin4
+  #   depends_on:
+  #     - postgres
+  #   restart: always
+  # 
+  # 
+  # nginx:
+  #   build: ./nginx
+  #   container_name: Nginx
+  #   volumes:
+  #     - static_volume:/home/app/web/static
+  #     - media_volume:/home/app/web/media
+  #   ports:
+  #     - 1317:80
+  #   depends_on:
+  #     - gunicorn
+  # 
+  # 
+  # apache-vim:
+  #   build: ./Apache/apache-vim
+  #   container_name: apache-vim
+  #   depends_on: 
+  #     - apache
