@@ -21,5 +21,5 @@ RUN apt-get update \
 # RUN rm /etc/apache2/sites-available/000-default.conf
 # RUN rm /etc/apache2/ports.conf
 
-# COPY ./.conf/000-default.conf etc/apache2/sites-available
-# COPY ./.conf/ports.conf /etc/apache2
+# COPY ./conf/000-default.conf etc/apache2/sites-available
+# COPY ./conf/ports.conf /etc/apache2

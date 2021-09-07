@@ -13,7 +13,7 @@ services:
     #   - 8000
     env_file:
       # 開発用
-      - .env/.env.dev
+      - ./env/.env.dev
       # 本番用
       # - .env/.env.proc
     depends_on:
@@ -32,7 +32,7 @@ services:
       - ./logs:/var/log/mysql
     env_file:
       # 開発用
-      - .env/.envmysql.dev
+      - ./env/.envmysql.dev
       # 本番用
       # - .env/.envmysql.proc
     # ports: 
