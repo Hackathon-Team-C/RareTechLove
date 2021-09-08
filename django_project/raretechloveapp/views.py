@@ -11,7 +11,6 @@ def topview(request):
 
 def signupview(request):
     USER_LIST = 'https://slack.com/api/users.list'
-    TOKEN = 'xoxp-2333779462451-2337966012902-2388925887554-1c34b66f22368d2415e5f773806b30d5'
     headers = {"Authorization": "Bearer " + TOKEN}
 
     if request.method == 'POST':
