@@ -1,10 +1,9 @@
-from django.contrib import admin
-from django.urls import path
-from .views import topview, signupview, loginview, logoutview
+from django.conf.urls import url
+from .views import raretechloveappView
+#from .views import raretechloveappSearchView
 
 urlpatterns = [
-    path('', topview, name='top'),
-    path('signup/', signupview, name='signup'),
-    path('login/', loginview, name='login'),
-    path('logout/', logoutview, name='logout'),
+    url(r"", raretechloveappView.as_view(), name="index"),
+    url(r"/login", raretechloveappView.as_view(), name="login"),
+    url(r"/signup", raretechloveappView.as_view(), name="signup"),
 ]

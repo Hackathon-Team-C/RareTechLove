@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <link rel="icon" href="{% static 'raretechloveapp/img/favicon.ico' %}" type="image/vnd.microsoft.icon">
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'raretechloveapp/css/reset.css' %}">
+  <link rel="stylesheet" href="{% static 'raretechloveapp/css/style.css' %}">
+  <title>マイページ | raretechlove</title>
+</head>
+
+<body>
+  <div class="container common">
+    <header>
+      <div class="header_inner">
+        <div class="header_img">
+          <img src="{% static 'raretechloveapp/img/logo3.svg' %}" alt="raretechlove">
+        </div>
+        <div class="search">
+          <p>記事番号質問検索</p>
+          <input type="text">
+          <a href="search.html"><input type="submit" value="&#xf002;" class="search-button"></a>
+        </div>
+      </div>
+    </header>
+    <div class="content">
+      <main>
+        <div class="main_box">
+          <div class="number box">
+            <p class="title">田中 太郎</p>
+            <div class="number_box">
+              <div class="question_box">
+                <p>質問数</p>
+                <p class="big">30 <span>件</span></p>
+              </div>
+              <div class="answer_box">
+                <p>回答数</p>
+                <p class="big">5 <span>件</span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="question tab box">
+            <div class="tabs">
+              <input id="question_item" type="radio" name="tab_item" checked>
+              <label class="tab_item" for="question_item">新着質問</label>
+              <input id="answer_item" type="radio" name="tab_item">
+              <label class="tab_item" for="answer_item">新着回答</label>
+              <div class="tab_content" id="question_content">
+                <ul>
+                  <li>
+                    <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
+">回答者<span class="name">田中太郎</span></span></div>
+                    <a href="st.html">RareTECHで質問をする勇気がないのですが、どうすれば質問ができるようになるのでしょうかという意味不明な質問を...</a>
+                  </li>
+                  <li>
+                    <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
+">回答者<span class="name">田中太郎</span></span></div>
+                    <a href="st.html">RareTECHで質問をする勇気がないのですが、どうすれば質問ができるようになるのでしょうかという意味不明な質問を...</a>
+                  </li>
+                  <li>
+                    <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
+">回答者<span class="name">田中太郎</span></span></div>
+                    <a href="st.html">RareTECHで質問をする勇気がないのですが、どうすれば質問ができるようになるのでしょうかという意味不明な質問を...</a>
+                  </li>
+                  <li>
+                    <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
+">回答者<span class="name">田中太郎</span></span></div>
+                    <a href="st.html">RareTECHで質問をする勇気がないのですが、どうすれば質問ができるようになるのでしょうかという意味不明な質問を...</a>
+                  </li>
+                  <li>
+                    <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
+">回答者<span class="name">田中太郎</span></span></div>
+                    <a href="st.html">RareTECHで質問をする勇気がないのですが、どうすれば質問ができるようになるのでしょうかという意味不明な質問を...</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab_content" id="answer_content">
+                <ul>
+                  <li>
+                    <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
+">回答者<span class="name">田中太郎</span></span></div>
+                    <a href="st.html">受講生の頑張りようがすごいので見習いたいのですが怠けてしまいがちな私に喝を入れてもらってもいいでしょうか。ハッカソンしながらも記事のっく２０本、...</a>
+                  </li>
+                  <li>
+                    <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
+">回答者<span class="name">田中太郎</span></span></div>
+                    <a href="st.html">受講生の頑張りようがすごいので見習いたいのですが怠けてしまいがちな私に喝を入れてもらってもいいでしょうか。ハッカソンしながらも記事のっく２０本、...</a>
+                  </li>
+                  <li>
+                    <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
+">回答者<span class="name">田中太郎</span></span></div>
+                    <a href="st.html">受講生の頑張りようがすごいので見習いたいのですが怠けてしまいがちな私に喝を入れてもらってもいいでしょうか。ハッカソンしながらも記事のっく２０本、...</a>
+                  </li>
+                  <li>
+                    <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
+">回答者<span class="name">田中太郎</span></span></div>
+                    <a href="st.html">受講生の頑張りようがすごいので見習いたいのですが怠けてしまいがちな私に喝を入れてもらってもいいでしょうか。ハッカソンしながらも記事のっく２０本、...</a>
+                  </li>
+                  <li>
+                    <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
+">回答者<span class="name">田中太郎</span></span></div>
+                    <a href="st.html">受講生の頑張りようがすごいので見習いたいのですが怠けてしまいがちな私に喝を入れてもらってもいいでしょうか。ハッカソンしながらも記事のっく２０本、...</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+
+
+          </div>
+
+        </div>
+      </main>
+      <aside>
+        <div class="side_content">
+          <p class="slack_name">slack name</p>
+          <div class="name_box">
+            <p>田中 太郎</p>
+          </div>
+          <nav>
+            <ul>
+              <li class="home"><a href="index.html">トップページ</a></li>
+              <li class="mypage current">マイページ</li>
+              <li class="logout"><a href="login.html">ログアウト</a></li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+    </div>
+  </div>
+</body>
+
+</html>

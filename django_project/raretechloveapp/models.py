@@ -6,7 +6,7 @@ class Rt_mst_user(models.Model):
 
     # slackユーザーID
     user_name = models.CharField(max_length=255)
-    # RareTECHLoveアプリのパスワード
+    # raretechloveアプリのパスワード
     pw = models.CharField(max_length=255)
     # Slackの表示名
     slack_name = models.CharField(max_length=255)
@@ -16,7 +16,7 @@ class Rt_mst_user(models.Model):
     # タイトルにSlackの表示名を表示する
     def __str__(self):
         return self.slack_name
-    
+
 
     ## getter
     def get_user_name(self):
@@ -44,7 +44,7 @@ class Rt_mst_user(models.Model):
             return False
 
 
-    
+
     ## setter
     def set_user_name(self, user_name):
         if user_name is not None:
@@ -103,7 +103,7 @@ class Rt_mst_article(models.Model):
         except:
             return False
 
-    
+
     ## setter
     def set_article_url(self, article_url):
         if article_url is not None:
@@ -138,7 +138,7 @@ class Rt_tbl_difficulty(models.Model):
     # タイトルに記事番号を表示する
     def __str__(self):
         return self.article_cd
-    
+
 
     ## getter
     def get_article_cd(self):
@@ -182,7 +182,7 @@ class Rt_tbl_difficulty(models.Model):
             return self.ave2
         except:
             return False
-    
+
 
     ## setter
     def set_article_cd(self, article_cd):
@@ -219,7 +219,7 @@ class Rt_tbl_difficulty(models.Model):
         if ave2 is not None:
             self.ave2 = ave2
             self.save()
-    
+
 
 
 # 質問等回数テーブル
@@ -256,7 +256,7 @@ class Rt_tbl_q_count(models.Model):
         except:
             return False
 
-    
+
     ## setter
     def set_user_cd(self, user_cd):
         if user_cd is not None:
@@ -332,7 +332,7 @@ class Rt_tbl_question(models.Model):
             return self.qa_dist
         except:
             return False
-    
+
 
     ## setter
     def set_ts_cd(self, ts_cd):
