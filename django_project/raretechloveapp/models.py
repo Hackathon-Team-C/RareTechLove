@@ -2,8 +2,7 @@ from django.db import models
 
 
 # 利用者マスタ
-class Rt_mst_user(models.Model):
-
+class UserMST(models.Model):
     # slackユーザーID
     user_name = models.CharField(max_length=255)
     # RareTECHLoveアプリのパスワード
@@ -16,7 +15,6 @@ class Rt_mst_user(models.Model):
     # タイトルにSlackの表示名を表示する
     def __str__(self):
         return self.slack_name
-    
 
     ## getter
     def get_user_name(self):
@@ -43,8 +41,6 @@ class Rt_mst_user(models.Model):
         except:
             return False
 
-
-    
     ## setter
     def set_user_name(self, user_name):
         if user_name is not None:
@@ -67,9 +63,8 @@ class Rt_mst_user(models.Model):
             self.save()
 
 
-
 # スプレッドシートマスタ
-class Rt_mst_article(models.Model):
+class ArticleMST(models.Model):
 
     # カテゴリの選択肢
     CATEGORY_CHOICES = (
@@ -80,10 +75,19 @@ class Rt_mst_article(models.Model):
         ('プログラミング', 'プログラミング'),
     )
 
+    # 難易度の選択肢
+    LEVEL_CHOICES = (
+        ('初級', '初級'),
+        ('中級', '中級'),
+        ('上級', '上級'),
+    )
+
     # 記事リンク先URL
     article_url = models.URLField()
     # スプレッドシートでの記事のカテゴリ
     category = models.CharField(max_length=255, verbose_name="カテゴリ", choices=CATEGORY_CHOICES)
+    # 記事の難易度
+    level = models.CharField(max_length=255, verbose_name="難易度", choices=LEVEL_CHOICES)
 
     # タイトルに記事リンク先URLを表示する
     def __str__(self):
@@ -103,6 +107,12 @@ class Rt_mst_article(models.Model):
         except:
             return False
 
+    def get_level(self):
+        try:
+            return self.level
+        except:
+            return False
+
     
     ## setter
     def set_article_url(self, article_url):
@@ -115,13 +125,17 @@ class Rt_mst_article(models.Model):
             self.category = category
             self.save()
 
+    def set_level(self, level):
+        if level is not None:
+            self.level = level
+            self.save()
+
 
 
 # 難易度テーブル
-class Rt_tbl_difficulty(models.Model):
-
+class DifficultyTBL(models.Model):
     # 記事番号(スプレッドシートマスタから取得)
-    article_cd = models.ForeignKey(Rt_mst_article, on_delete=models.CASCADE)
+    article_cd = models.ForeignKey(ArticleMST, on_delete=models.CASCADE)
     # 記事ごとの合計点数(1周目)
     total1 = models.IntegerField()
     # 記事ごとの回答数(1周目)
@@ -138,7 +152,6 @@ class Rt_tbl_difficulty(models.Model):
     # タイトルに記事番号を表示する
     def __str__(self):
         return self.article_cd
-    
 
     ## getter
     def get_article_cd(self):
@@ -182,7 +195,6 @@ class Rt_tbl_difficulty(models.Model):
             return self.ave2
         except:
             return False
-    
 
     ## setter
     def set_article_cd(self, article_cd):
@@ -219,14 +231,12 @@ class Rt_tbl_difficulty(models.Model):
         if ave2 is not None:
             self.ave2 = ave2
             self.save()
-    
 
 
 # 質問等回数テーブル
-class Rt_tbl_q_count(models.Model):
-
+class QCountTBL(models.Model):
     # slackユーザーID(利用者マスタから取得)
-    user_cd = models.ForeignKey(Rt_mst_user, on_delete=models.CASCADE)
+    user_cd = models.ForeignKey(UserMST, on_delete=models.CASCADE)
     # Slackの質問回数
     question_count = models.IntegerField()
     # Slackの回答回数
@@ -235,7 +245,6 @@ class Rt_tbl_q_count(models.Model):
     # タイトルにslackユーザーIDを表示する
     def __str__(self):
         return self.user_cd
-
 
     ## getter
     def get_user_cd(self):
@@ -256,7 +265,6 @@ class Rt_tbl_q_count(models.Model):
         except:
             return False
 
-    
     ## setter
     def set_user_cd(self, user_cd):
         if user_cd is not None:
@@ -274,16 +282,14 @@ class Rt_tbl_q_count(models.Model):
             self.save()
 
 
-
 # 質問回答テーブル
-class Rt_tbl_question(models.Model):
-
+class QuestionTBL(models.Model):
     # タイムスタンプID
     ts_cd = models.DateTimeField(null=True, blank=True)
     # 記事番号(スプレッドシートマスタから取得)
-    article_cd = models.ForeignKey(Rt_mst_article, on_delete=models.PROTECT)
+    article_cd = models.ForeignKey(ArticleMST, on_delete=models.PROTECT)
     # Slackの質問者・回答者(利用者マスタから取得)
-    user_cd = models.ForeignKey(Rt_mst_user, on_delete=models.PROTECT)
+    user_cd = models.ForeignKey(UserMST, on_delete=models.PROTECT)
     # Slackの質問内容
     question_thread = models.TextField()
     # Slackの投稿日時
@@ -294,7 +300,6 @@ class Rt_tbl_question(models.Model):
     # タイトルにSlackの質問者・回答者を表示する
     def __str__(self):
         return self.user_cd
-
 
     ## getter
     def get_ts_cd(self):
@@ -332,7 +337,6 @@ class Rt_tbl_question(models.Model):
             return self.qa_dist
         except:
             return False
-    
 
     ## setter
     def set_ts_cd(self, ts_cd):

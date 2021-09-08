@@ -2,20 +2,23 @@ version: "3.8"
  
 services:
   gunicorn:
-    build: ./django_project
+    build: 
+      context: ./django_project
+      dockerfile: Dockerfile.dev
     container_name: Gunicorn
-    # command: gunicorn raretechlove.wsgi:application --bind 0.0.0.0:8000
-    command: gunicorn raretechlove.wsgi:application
+    command: gunicorn raretechlove.wsgi:application --bind 0.0.0.0:8000
+    # command: gunicorn raretechlove.wsgi:application
     volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
-    # expose:
-    #   - 8000
+      - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
+      - ./django_project/raretechloveapp/templates:/var/www/html
+    expose:
+      - 8000
     env_file:
       # 開発用
-      - ./env/.env.dev
+      - ./.env/.env.dev
       # 本番用
-      # - .env/.env.proc
+      # - ./.env/.env.proc
     depends_on:
       - phpmyadmin
  
@@ -25,16 +28,14 @@ services:
     container_name: MySQL8
     # command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     volumes:
-      # - ./MySQL:/var/mysql
       - mysql_data:/var/lib/mysql
       - ./MySQL/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      # - ./data:/var/lib/mysql
       - ./logs:/var/log/mysql
     env_file:
       # 開発用
-      - ./env/.envmysql.dev
+      - ./.env/.envmysql.dev
       # 本番用
-      # - .env/.envmysql.proc
+      # - ./.env/.envmysql.proc
     # ports: 
     #   - "${MYSQL_PORT_SEC}:${MYSQL_PORT}"
     restart: always
@@ -43,11 +44,11 @@ services:
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: phpMyAdmin
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOSTS=mysql
-      - PMA_USER=RareTECHLove
-      - PMA_PASSWORD=okotyma_is_the_best
+    env_file:
+      # 開発用
+      - ./.env/.envphpmyadmin.dev
+      # 本番用
+      # - ./.env/.envphpmyadmin.proc
     ports:
       - "127.0.0.1:3000:80"
     # links: 
@@ -61,9 +62,9 @@ services:
     build: ./Apache-PHP
     container_name: Apache-PHP
     volumes:
-      - ./django_project/raretechloveapp/templates:/var/www/html
-      # - ./Apache/.conf/:/usr/local/apache2/conf/
-      # - ./html:/var/www/html
+      - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
+      # - ./django_project/raretechloveapp/templates:/var/www/html
     ports:
       - 1318:80
     depends_on:
@@ -76,7 +77,6 @@ volumes:
       type: none
       device: ./MySQL/DataBase
       o: bind
-  # pgadmin4:
   static_volume:
   media_volume:
 

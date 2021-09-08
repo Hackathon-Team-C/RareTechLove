@@ -1,0 +1,645 @@
+@charset "utf-8";
+
+/*================================
+	共通
+=================================*/
+
+* {
+  box-sizing: border-box;
+  word-break: break-all;
+}
+
+img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+html,
+body,
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Roboto", "Noto Sans JP", "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+/*================================
+	header
+=================================*/
+
+header {
+  background: #333;
+  padding: 0 50px 0 20px;
+}
+
+.header_inner {
+  display: flex;
+  padding: 15px 0;
+  justify-content: space-between;
+}
+
+.header_inner .header_img {
+  max-width: 200px;
+}
+
+.header_inner .header_img img {
+  filter: blur(0.3px) brightness(90%);
+}
+
+.header_inner .search {
+  display: flex;
+  color: #fff;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.header_inner .search p {
+  font-size: 14px;
+  letter-spacing: 1.3px;
+  color: #f1f1f1;
+  text-shadow: rgba(255, 255, 255, 0.2);
+}
+
+.header_inner .search input {
+  height: 35px;
+  line-height: 35px;
+  border-radius: 4px;
+  margin: 0 5px;
+  background: #f1f1f1;
+  border: 1px solid #f1f1f1;
+}
+
+.header_inner .search .search-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  color: #f1f1f1;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: "Font Awesome 5 Free";
+
+  transition: color 0.3s ease 0s;
+}
+
+/*================================
+  ログイン後の共通画面
+=================================*/
+
+.content {
+  display: flex;
+}
+
+main {
+  order: 2;
+  background: #f0f0f0;
+  width: calc(100% - 300px);
+}
+
+aside {
+  order: 1;
+  width: 300px;
+  background: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/*================================
+	共通メニュー、共通CSS
+=================================*/
+
+main .main_box {
+  padding: 50px 70px;
+}
+
+main .main_box .box {
+  padding: 50px;
+  margin: 0 auto 50px;
+  background: #fff;
+}
+
+main .main_box .box.tab {
+  padding: 0;
+}
+
+main .main_box .title {
+  font-size: 23px;
+  color: #666;
+  font-weight: 600;
+  padding: 5px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #cecece;
+}
+
+aside .side_content .slack_name {
+  color: #dadada;
+  margin: 20px 20px 0;
+}
+
+aside .side_content {
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+aside .side_content .name_box {
+  background: #7d7d7d;
+  color: #fff;
+  text-align: center;
+  padding: 15px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 10px 20px 20px;
+}
+
+aside .side_content nav {
+}
+
+aside .side_content nav ul {
+}
+
+aside .side_content nav ul li {
+  padding: 0 20px 0 40px;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+aside .side_content nav ul li.current {
+  color: #fff;
+  padding: 20px 40px 20px 90px;
+  position: relative;
+}
+
+aside .side_content nav ul li.current:before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 600;
+  position: absolute;
+  left: 40px;
+  top: 14px;
+  font-size: 25px;
+}
+
+aside .side_content nav ul li.home.current:before {
+  content: "\f015";
+}
+
+aside .side_content nav ul li.mypage.current:before {
+  content: "\f0c5";
+}
+
+aside .side_content nav ul li a {
+  color: #969696;
+  text-decoration: none;
+  display: block;
+  padding: 20px 20px 20px 50px;
+  position: relative;
+  transition: all 0.2s;
+}
+
+aside .side_content nav ul li a:hover {
+  color: #fff;
+}
+
+aside .side_content nav ul li a:before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 600;
+  position: absolute;
+  left: 5px;
+  top: 14px;
+  font-size: 25px;
+}
+
+aside .side_content nav ul li.home a:before {
+  content: "\f015";
+}
+
+aside .side_content nav ul li.mypage a:before {
+  content: "\f0c5";
+}
+
+aside .side_content nav ul li.logout {
+  background: #212121;
+  margin-top: auto;
+}
+
+aside .side_content nav ul li.logout a:before {
+  content: "\f52b";
+  left: 0;
+}
+
+/*================================
+	質問装飾
+=================================*/
+
+.question {
+  color: #666;
+}
+
+.question ul:not(.pagination) li {
+  list-style: none;
+}
+
+.question ul:not(.pagination) li {
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.question .post_meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.question .post_meta .post_number {
+  font-weight: 500;
+}
+
+.question .post_meta .name {
+  font-weight: 600;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.question ul:not(.pagination) li a {
+  color: #192d9b;
+  text-decoration: none;
+  font-weight: 500;
+  display: block;
+  margin: 8px 0 0;
+  font-size: 16px;
+  line-height: 2;
+}
+
+.question a:hover {
+  text-decoration: underline;
+}
+
+/*================================
+	ページネーション
+=================================*/
+
+.pagination {
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination li {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  width: 45px;
+  margin: 0 5px;
+  text-align: center;
+  border: 1px #ccc solid;
+  color: #000053;
+  padding: 0 5px;
+  border-radius: 5px / 5px;
+}
+
+.pagination .pre {
+  background-color: #ccc;
+  color: #666;
+}
+.pagination .this {
+  background-color: #777;
+  color: #fff;
+}
+.pagination li a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+.pagination li a:hover {
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  background-color: #777777;
+}
+
+/*================================
+	トップページの項目
+=================================*/
+
+.news ul {
+  margin-top: 30px;
+}
+
+.news li {
+  list-style: none;
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e7e7e7;
+  padding-bottom: 15px;
+}
+
+.news li .cat {
+  background: #666;
+  color: #fff;
+  font-size: 12px;
+  width: 100%;
+  max-width: 100px;
+  border-radius: 2px;
+  text-align: center;
+  margin-right: 10px;
+  vertical-align: middle;
+  padding-top: 12px;
+}
+
+.news li span,
+.news li time {
+  display: block;
+  padding: 10px;
+}
+
+/*================================
+	マイページ
+=================================*/
+
+.number_box {
+  display: flex;
+  justify-content: space-around;
+  color: #666;
+}
+.number_box p {
+  font-size: 18px;
+}
+.number_box p.big {
+  margin-top: 10px;
+  font-size: 100px;
+  font-weight: 600;
+}
+
+.number_box p.big span {
+  font-size: 50px;
+}
+
+.tabs {
+  margin-top: 50px;
+  padding-bottom: 40px;
+  background-color: #fff;
+  margin: 0 auto;
+}
+
+.tab_item {
+  width: calc(100% / 2);
+  height: 70px;
+  background-color: #f0f0f0;
+  line-height: 70px;
+  font-size: 20px;
+  text-align: center;
+  color: #565656;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item:hover {
+  opacity: 0.75;
+}
+
+input[name="tab_item"] {
+  display: none;
+}
+
+.tab_content {
+  display: none;
+  padding: 40px 40px 0;
+  clear: both;
+  overflow: hidden;
+}
+
+#question_item:checked ~ #question_content,
+#answer_item:checked ~ #answer_content {
+  display: block;
+}
+
+.tabs input:checked + .tab_item {
+  background-color: #ffffff;
+}
+
+/*================================
+	スレッド
+=================================*/
+
+.question_st .meta_box {
+  display: flex;
+  justify-content: space-between;
+  color: #454545;
+}
+
+.question_st .meta_box .post_number,
+.answer_st .answer {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.question_st .meta_box p {
+  font-size: 16px;
+}
+
+.question_st p,
+.answer_st p {
+  font-size: 18px;
+  line-height: 1.8;
+  margin: 10px 0;
+  color: #454545;
+}
+
+.question_st .meta_box .name {
+  font-weight: 600;
+}
+
+.answer_st .answer {
+  border-bottom: 1px solid #e7e7e7;
+  text-align: right;
+  margin-bottom: 30px;
+}
+
+/*================================
+	ログイン画面の背景
+=================================*/
+
+html.first,
+html.first body {
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+  background: #191d1e; /* Old browsers */
+  background: -moz-linear-gradient(0deg, #191d1e 50%, #283139 100%); /* FF3.6+ */
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    color-stop(50%, #191d1e),
+    color-stop(100%, #283139)
+  ); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(0deg, #191d1e 50%, #283139 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(0deg, #191d1e 50%, #283139 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(0deg, #191d1e 50%, #283139 100%); /* IE10+ */
+  background: linear-gradient(0deg, #191d1e 50%, #283139 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#191d1e', endColorstr='#283139',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background-attachment: fixed;
+}
+
+#projector {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.center-div {
+  width: 580px;
+  height: 374px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -290px;
+  margin-top: -187px;
+}
+
+#preloaderDiv {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -27px;
+  margin-top: -27px;
+}
+
+#logo {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+#date2014 {
+  position: absolute;
+  padding-left: 210px;
+  padding-top: 15px;
+  opacity: 0;
+  top: 303px;
+  left: 0;
+  filter: alpha(opacity=0);
+}
+
+/*================================
+	ログイン画面
+=================================*/
+
+.first_input main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+  background: none;
+}
+
+.first_input_form {
+  max-width: 500px;
+  margin: 0px auto;
+  min-height: 400px;
+  padding: 50px;
+  border: 1px solid rgb(255 255 255 / 32%);
+  background: #e0e0e044;
+}
+
+.first_input_form input {
+  background: rgb(255, 255, 255, 0.5);
+  display: block;
+  padding: 15px 10px;
+  border: none;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.first_input_form input::placeholder {
+  color: #223438;
+  font-size: 18px;
+}
+
+.first_input_form img {
+  max-width: 300px;
+  display: block;
+  margin: 0 auto 40px;
+  filter: blur(1px) saturate(40%) contrast(200%);
+}
+
+.dec {
+  display: flex;
+  justify-content: space-around;
+}
+
+.dec .btn {
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  color: rgb(212, 211, 211);
+  background: rgb(129 116 16);
+}
+
+.dec .btn:hover {
+  opacity: 0.7;
+}
+
+.first_input_form .btn2 {
+  background: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  padding: 15px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #bfbfbf;
+}
+
+.first_input_form p {
+  padding: 10px;
+  color: rgb(212, 211, 211);
+}
+
+@media screen and (max-width: 1200px) {
+  .content {
+    flex-direction: column;
+  }
+
+  main {
+    width: 100%;
+  }
+
+  main .main_box {
+    padding: 20px;
+  }
+
+  aside {
+    display: none;
+  }
+
+  .first_input main {
+    padding: 0 20px;
+  }
+  .dec {
+    flex-direction: column;
+  }
+
+  .dec .btn {
+    margin: 20px 0;
+    text-align: center;
+  }
+}
