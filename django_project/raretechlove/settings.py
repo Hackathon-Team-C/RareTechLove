@@ -36,7 +36,7 @@ ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS')
 # Application definition
 
 INSTALLED_APPS = [
-    'raretechloveapp.apps.RaretechloveappConfig',
+    'raretechloveapp.apps.raretechloveappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -153,7 +153,7 @@ USE_TZ = True
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
- 
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
