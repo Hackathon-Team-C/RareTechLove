@@ -1,16 +1,16 @@
 version: "3.8"
- 
+
 services:
   gunicorn:
     build: ./django_project
     container_name: Gunicorn
-    # command: gunicorn raretechlove.wsgi:application --bind 0.0.0.0:8000
-    command: gunicorn raretechlove.wsgi:application
+    command: gunicorn raretechlove.wsgi:application --bind 0.0.0.0:8000
+    #command: gunicorn raretechlove.wsgi:application
     volumes:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
-    # expose:
-    #   - 8000
+    expose:
+      - 8000
     env_file:
       # 開発用
       - ./env/.env.dev
@@ -18,7 +18,6 @@ services:
       # - .env/.env.proc
     depends_on:
       - phpmyadmin
- 
 
   mysql:
     build: ./MySQL
@@ -35,10 +34,9 @@ services:
       - ./env/.envmysql.dev
       # 本番用
       # - .env/.envmysql.proc
-    # ports: 
+    # ports:
     #   - "${MYSQL_PORT_SEC}:${MYSQL_PORT}"
     restart: always
-
 
   phpmyadmin:
     image: phpmyadmin:latest
@@ -50,25 +48,23 @@ services:
       - PMA_PASSWORD=okotyma_is_the_best
     ports:
       - "127.0.0.1:3000:80"
-    # links: 
+    # links:
     #   - "mysql"
-    depends_on: 
+    depends_on:
       - mysql
     restart: always
- 
 
   apache:
     build: ./Apache-PHP
     container_name: Apache-PHP
     volumes:
-      - ./django_project/raretechloveapp/templates:/var/www/html
+      - ./django_project/raretechloveapp/templates/raretechloveapp:/var/www/html
       # - ./Apache/.conf/:/usr/local/apache2/conf/
       # - ./html:/var/www/html
     ports:
       - 1318:80
     depends_on:
       - gunicorn
-
 
 volumes:
   mysql_data:
@@ -80,8 +76,6 @@ volumes:
   static_volume:
   media_volume:
 
-
-
   # postgres:
   #   image: postgres:13.4-alpine
   #   container_name: ProgreSQL13.4
@@ -90,8 +84,8 @@ volumes:
   #   env_file:
   #     - ./.env.dev
   #   restart: always
-  # 
-  # 
+  #
+  #
   # pgadmin4:
   #   image: dpage/pgadmin4
   #   container_name: pgadmin4
@@ -106,8 +100,8 @@ volumes:
   #   depends_on:
   #     - postgres
   #   restart: always
-  # 
-  # 
+  #
+  #
   # nginx:
   #   build: ./nginx
   #   container_name: Nginx
@@ -118,10 +112,10 @@ volumes:
   #     - 1317:80
   #   depends_on:
   #     - gunicorn
-  # 
-  # 
+  #
+  #
   # apache-vim:
   #   build: ./Apache/apache-vim
   #   container_name: apache-vim
-  #   depends_on: 
+  #   depends_on:
   #     - apache
