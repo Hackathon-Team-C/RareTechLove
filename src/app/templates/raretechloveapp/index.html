@@ -1,0 +1,34 @@
+{% load static %}
+{% include 'raretechloveapp/head.html' %}
+{% include 'raretechloveapp/header.html' %}
+<main>
+  <div class="main_box">
+    <div class="news box">
+      <p class="title" data-text="NEWS">- 新着情報 -</p>
+      <ul>
+        <li><span class="cat">サイト開設</span><time class="time" datetime="">2020/8/18</time><span>サイトを開設しました</span>
+        </li>
+        <li><span class="cat">サイト開設</span><time class="time" datetime="">2020/8/18</time><span>機能を追加しました。詳しくは<a
+              href="st.html">こちら</a></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="question box">
+      <p class="title" data-text="QUESTION">- 新着質問 -</p>
+      <ul>
+        {% for new in news %}
+        <li>
+          <div class="post_meta"><span class="post_number">記事番号【{{new.postnumber}}】</span>
+            <span class="respondent">質問者<span class="name">{{new.name}}</span></span>
+          </div>
+          <a href="/st?TS_CD={{ new.ts }}">{{new.text}}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+</main>
+{% include 'raretechloveapp/aside.html' %}
+{% include 'raretechloveapp/footer.html' %}
