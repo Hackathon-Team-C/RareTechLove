@@ -107,7 +107,7 @@ class raretechloveappView(TemplateView):
                 self.params["obj"] = self.get_reply(request.GET.get("TS_CD"))
                 return render(request, "raretechloveapp/st.html", self.params)
             elif path == '/' :
-                self.params['news'] = self.get_channel_histry(5,0)
+                #self.params['news'] = self.get_channel_histry(5,0)
                 return render(request, "raretechloveapp/index.html", self.params)
             else :
                 return render(request, "raretechloveapp/"+ path +".html", self.params)
@@ -116,7 +116,7 @@ class raretechloveappView(TemplateView):
                 #obj = TodoDB()
                 #todoform = TodoForm(request.POST, instance=obj)
                 #todoform.save()
-                return render(request, "raretechloveapp/index.html", self.params)
+                return render(request, "/raretechloveapp/index.html", self.params)
 
 
 
