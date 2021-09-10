@@ -21,10 +21,9 @@ CREATE TABLE ARTICLE_MST
   artile_cd INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   artile_url VARCHAR(255) NOT NULL,
   category VARCHAR(255) NOT NULL,
-  artile_rank VARCHAR(255) NOT NULL
+  artile_rank VARCHAR(255) NOT NULL,
+  article_title VARCHAR(21844) NOT NULL
 );
-INSERT INTO ARTICLE_MST (artile_cd,artile_url,category) VALUES (1, "http://example.com/","難しい");
-
 
 DROP TABLE IF EXISTS Q_COUNT_TBL;
 CREATE TABLE Q_COUNT_TBL
