@@ -2,7 +2,8 @@ version: "3"
 
 services:
   nginx:
-    image: nginx:1.13
+    image: nginx:1.21.1
+    container_name: nginx
     ports:
       - "8000:8000"
     volumes:
@@ -14,20 +15,23 @@ services:
 
   mysql:
     image: mysql:5.7
+    container_name: mysql
+    # platform: linux/x86_64
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
-      - "3306:3306"
+      - "4306:3306"
     env_file:
       - ./mysql/.env
     volumes:
-      - ./mysql:/var/lib/mysql
-      - ./sql:/docker-entrypoint-initdb.d
+      - ./mysql/DataBase:/var/lib/mysql
+      - ./mysql/sql:/docker-entrypoint-initdb.d
 
   django:
     build: ./django
-    command: uwsgi --socket :8001 --module app.wsgi --py-autoreload 1 --logto /tmp/mylog.log
+    container_name: django
+    command: uwsgi --socket :8001 --module raretechlove.wsgi --py-autoreload 1 --logto /tmp/mylog.log
     volumes:
-      - ./src:/code
+      - ./:/code
       - ./static:/static
     expose:
       - "8001"
