@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
+#from django.contrib.auth.models import User
+from django.db import IntegrityError
 from django.views.generic import TemplateView
+#from django.contrib.auth import authenticate, login, logout
 #from django.views.generic import ListView
 #from .models import Article
 import json
@@ -11,20 +13,19 @@ import os
 
 class raretechloveappView(TemplateView):
         def __init__(self):
-        #   self.CONVERSATION_URL = 'https://slack.com/api/conversations.history'
-        #   #conversations.replies
-        #   self.REPLY＿URL = 'https://slack.com/api/conversations.replies'
-        #   #appトークン
-        #   self.TOKEN = os.environ.get("TOKEN")
-        #   #ハッカソンチャンネルID
-        #   self.CHANNEL_ID = os.environ.get("CHANNEL_ID")
-        #   #userlist
-        #   self.USER_LIST = 'https://slack.com/api/users.list'
-        #   #ヘッダー
-        #   self.headers = {"Authorization": "Bearer " + self.TOKEN}
-          self.params = {
-                "title": "title",
-          }
+          #チャンネルヒストリー
+          self.CONVERSATION_URL = 'https://slack.com/api/conversations.history'
+          #conversations.replies
+          self.REPLY＿URL = 'https://slack.com/api/conversations.replies'
+          #appトークン
+          self.TOKEN = os.environ.get("TOKEN")
+          #ハッカソンチャンネルID
+          self.CHANNEL_ID = os.environ.get("CHANNEL_ID")
+          #userlist
+          self.USER_LIST = 'https://slack.com/api/users.list'
+          #いい感じにslackからメッセージが取れる魔法の呪文
+          self.headers = {"Authorization": "Bearer " + self.TOKEN}
+          self.params ={}
 
         def all_user_name(self):
             res = requests.get(self.USER_LIST, headers=self.headers)
@@ -97,22 +98,63 @@ class raretechloveappView(TemplateView):
                      result.append(item)
                  return result
 
+        # def signupview(request):
+        #     if request.method == 'POST':
+        #         username_data = request.POST.get('username_data')
+        #         password_data = request.POST.get('password_data')
+        #         try:
+        #             user = User.objects.create_user(username_data, '', password_data)
+        #         except IntegrityError:
+        #             return render(request, 'signup.html', {'error': 'このユーザーは登録されています'})
+        #     else:
+        #         return render(request, 'signup.html', {})
+        #     return render(request, 'signup.html', {})
+
+        #ログインしてなかったら最初にログインページに飛ばすよ
+        #def loginredirect(self,request):
+            #path = request.path
+            #if path != '/login' and path != '/signup':
+                    # username_data = request.POST.get('username_data')
+                    # password_data = request.POST.get('password_data')
+                    # user = authenticate(request, username=username_data, password=password_data)
+                    # if user is not None:
+                    #     login(request, user)
+                    #     return True
+                    # else:
+                    #     return
+                    #ログインしてます ならば該当のページへゴー
+                    #してませんならばログインするが良い！
+
+
+        # def logoutview(self,request):
+        #     logout(request)
+        #     return render(request, "raretechloveapp/login.html")
+
         def get(self, request):
             path = request.path
             if path == '/search' :
                 self.params["ARTICLE_CD"] = request.GET.get("ARTICLE_CD")
                 self.params["obj"] = self.get_channel_histry(5,self.params["ARTICLE_CD"])
-                return render(request, "raretechloveapp/search.html", self.params)
-            elif path == '/st' :
+                if self.params["obj"] :
+                    return render(request, "raretechloveapp/search.html", self.params)
+                else :
+                    self.params["obj"] == -1
+                    return render(request, "raretechloveapp/search.html", self.params)
+            elif path == '/post' :
                 self.params["obj"] = self.get_reply(request.GET.get("TS_CD"))
-                return render(request, "raretechloveapp/st.html", self.params)
-            elif path == '/' :
+                return render(request, "raretechloveapp/post.html", self.params)
+            elif path == '/mypage':
+                self.params["r"] = "mypage"
+                return render(request, "raretechloveapp/mypage.html", self.params)
+            elif path == '/':
                 #self.params['news'] = self.get_channel_histry(5,0)
+                self.params["r"] = "index"
                 return render(request, "raretechloveapp/index.html", self.params)
             else :
                 return render(request, "raretechloveapp/"+ path +".html", self.params)
 
         def post(self, request):
+                path = request.path
                 #obj = TodoDB()
                 #todoform = TodoForm(request.POST, instance=obj)
                 #todoform.save()
@@ -127,39 +169,7 @@ class raretechloveappView(TemplateView):
 
 
 
-# from django.shortcuts import render, redirect
-# from django.contrib.auth.models import User
-# from django.db import IntegrityError
-# from django.contrib.auth import authenticate, login, logout
 
-# # Create your views here.
-# def topview(request):
-#     return render(request, 'top.html', {'hello': 'Hello'})
 
-# def signupview(request):
-#     if request.method == 'POST':
-#         username_data = request.POST.get('username_data')
-#         password_data = request.POST.get('password_data')
-#         try:
-#             user = User.objects.create_user(username_data, '', password_data)
-#         except IntegrityError:
-#             return render(request, 'signup.html', {'error': 'このユーザーは登録されています'})
-#     else:
-#         return render(request, 'signup.html', {})
-#     return render(request, 'signup.html', {})
 
-# def loginview(request):
-#     if request.method == 'POST':
-#         username_data = request.POST.get('username_data')
-#         password_data = request.POST.get('password_data')
-#         user = authenticate(request, username=username_data, password=password_data)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('top_page')
-#         else:
-#             return redirect('login')
-#     return render(request, 'login.html')
 
-# def logoutview(request):
-#     logout(request)
-#     return redirect('login')

@@ -10,9 +10,17 @@
     </div>
     <nav>
       <ul>
+        {% if r == 'index' %}
         <li class="home current">トップページ</li>
-        <li class="mypage"><a href="mypage.html">マイページ</a></li>
-        <li class="logout"><a href="login.html">ログアウト</a></li>
+        {% else %}
+        <li class="home"><a href="{% url 'index' %}">トップページ</a></li>
+        {% endif %}
+        {% if r == 'mypage' %}
+        <li class="mypage current">マイページ</li>
+        {% else %}
+        <li class="mypage"><a href="{% url 'mypage' %}">マイページ</a></li>
+        {% endif %}
+        <li class="logout"><a href="{% url 'login' %}">ログアウト</a></li>
       </ul>
     </nav>
   </div>

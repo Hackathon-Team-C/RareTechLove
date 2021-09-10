@@ -21,7 +21,9 @@ from .views import raretechloveappView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r"sqlbuddy", raretechloveappView.as_view(), name="sqlbuddy"),
     url(r"", raretechloveappView.as_view(), name="index"),
-    url(r"/login", raretechloveappView.as_view(), name="login"),
-    url(r"/signup", raretechloveappView.as_view(), name="signup"),
+    url(r"login", raretechloveappView.as_view(), name="login"),
+    url(r"signup", raretechloveappView.as_view(), name="signup"),
+    url(r"mypage", raretechloveappView.as_view(), name="mypage"),
 ]
