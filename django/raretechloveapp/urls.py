@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.conf.urls import url
 from .views import RaretechloveappView
 #from .views import raretechloveappSearchView
@@ -11,4 +14,12 @@ urlpatterns = [
     url(r"login", RaretechloveappView.as_view(), name="login"),
     url(r"signup", RaretechloveappView.as_view(), name="signup"),
     url(r"mypage", RaretechloveappView.as_view(), name="mypage"),
-]
+    url(r"aside", RaretechloveappView.as_view(), name="aside"),
+    url(r"footer", RaretechloveappView.as_view(), name="footer"),
+    url(r"head", RaretechloveappView.as_view(), name="head"),
+    url(r"header", RaretechloveappView.as_view(), name="header"),
+    url(r"post", RaretechloveappView.as_view(), name="post"),
+    url(r"mukasi", RaretechloveappView.as_view(), name="mukasi"),
+    url(r"search", RaretechloveappView.as_view(), name="search"),
+    url(r"test", RaretechloveappView.as_view(), name="test"),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
