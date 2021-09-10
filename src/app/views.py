@@ -2,12 +2,13 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.paginator import Paginator
 from django.views.generic import TemplateView
+from django.contrib import admin
+
 #from django.views.generic import ListView
 #from .models import Article
 import json
 import requests
 import re
-import os
 
 class raretechloveappView(TemplateView):
         def __init__(self):
@@ -106,6 +107,8 @@ class raretechloveappView(TemplateView):
             elif path == '/st' :
                 self.params["obj"] = self.get_reply(request.GET.get("TS_CD"))
                 return render(request, "raretechloveapp/st.html", self.params)
+            elif path == '/admin' :
+                return render(request,admin.site.urls)
             elif path == '/' :
                 #self.params['news'] = self.get_channel_histry(5,0)
                 return render(request, "raretechloveapp/index.html", self.params)

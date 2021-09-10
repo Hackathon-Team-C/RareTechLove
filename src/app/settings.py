@@ -14,10 +14,22 @@ import pymysql
 STATIC_ROOT = '/static'
 pymysql.install_as_MySQLdb()
 from pathlib import Path
+from django.utils.six import python_2_unicode_compatible
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
+SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
+SLACK_SCOPE = 'admin,bot'
+
+SLACK_PIPELINES = [
+    'app.pipelines.debug_oauth_request',
+    'app.pipelines.register_user',
+    'app.pipelines.send_email',
+]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -40,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_slack_oauth',
 ]
 
 MIDDLEWARE = [

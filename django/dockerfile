@@ -6,4 +6,6 @@ ADD requirements.txt /code/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install requests
+RUN pip install django-slack-oauth
+RUN pip install django-utils-six
 ADD . /code/

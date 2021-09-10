@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from django.conf.urls import url
 from .views import raretechloveappView
 #from .views import raretechloveappSearchView
@@ -22,6 +22,7 @@ from .views import raretechloveappView
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r"", raretechloveappView.as_view(), name="index"),
-    url(r"/login", raretechloveappView.as_view(), name="login"),
-    url(r"/signup", raretechloveappView.as_view(), name="signup"),
+    url(r"login", raretechloveappView.as_view(), name="login"),
+    url(r"signup", raretechloveappView.as_view(), name="signup"),
+    url(r'^slack/', include('django_slack_oauth.urls')),
 ]
