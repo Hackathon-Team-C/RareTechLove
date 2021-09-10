@@ -1,8 +1,8 @@
-version: "3"
+version: "3.8"
 
 services:
   nginx:
-    image: nginx:1.21.1
+    image: nginx:1.21.3
     container_name: nginx
     ports:
       - "8000:8000"
@@ -31,7 +31,7 @@ services:
     container_name: django
     command: uwsgi --socket :8001 --module raretechlove.wsgi --py-autoreload 1 --logto /tmp/mylog.log
     volumes:
-      - ./:/code
+      - .:/code
       - ./static:/static
     expose:
       - "8001"
