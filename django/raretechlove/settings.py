@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 import pymysql
-STATIC_ROOT = '/static/'
+STATIC_ROOT = '/static'
 pymysql.install_as_MySQLdb()
 from pathlib import Path
 
