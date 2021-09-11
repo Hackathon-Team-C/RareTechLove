@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # 利用者マスタ
 class UserMST(models.Model):
 

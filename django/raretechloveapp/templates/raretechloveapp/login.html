@@ -23,8 +23,10 @@
     <main>
       <form method="POST" action="" class="first_input_form">
         <h1><img src="{% static 'raretechloveapp/img/logo.svg' %}" alt="RareTECHLove"></h1>
-        <input type="text" placeholder="slackID">
-        <input type="password" placeholder="パスワード">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <!-- <input type="text" name='email' placeholder="ログイン用メールアドレス">
+        <input type="password" name='password' placeholder="パスワード"> -->
         <a href="{% url 'index' %}" class="btn2">ログイン</a>
         <div class="dec">
           <p>登録がお済みで無い方は</p>
