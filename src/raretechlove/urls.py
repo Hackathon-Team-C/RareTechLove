@@ -1,11 +1,12 @@
-from django.conf.urls import url
-from .views import RareTechLoveView
+from django.urls import path
+from .views import Top,Login,SignUp,Logout, Top,Mypage
 #from .views import RareTechLoveAppSearchView
 
 urlpatterns = [
-    url(r"", RareTechLoveView.as_view(), name="index"),
-    url(r"login", RareTechLoveView.as_view(), name="login"),
-    url(r"signup", RareTechLoveView.as_view(), name="signup"),
-    url(r"mypage", RareTechLoveView.as_view(), name="mypage"),
-    url(r"list", RareTechLoveView.as_view(), name="list"),
+    path('', Top.as_view(), name='index'),
+    path("login/", Login.as_view(), name="login"),
+    path("logout/", Logout.as_view(), name="logout"),
+    path("signup/", SignUp.as_view(), name="signup"),
+    path("mypage/", Mypage.as_view(), name="mypage"),
+    # url(r"list", RareTechLoveView.as_view(), name="list"),
 ]
