@@ -11,7 +11,12 @@ import requests
 import re
 import os
 
-class raretechloveappView(TemplateView):
+module_dir = os.path.dirname(__file__) # views.pyのあるディレクトリを取得
+json_path = os.path.join(module_dir, 'jojo.json')
+
+f = open(json_path, 'r')
+
+class RareTechLoveView(TemplateView):
         def __init__(self):
           #チャンネルヒストリー
           self.CONVERSATION_URL = 'https://slack.com/api/conversations.history'

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 import pymysql
-STATIC_ROOT = '/static'
 pymysql.install_as_MySQLdb()
 from pathlib import Path
 
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'raretechlove',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -86,7 +85,6 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -129,4 +127,14 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# # AUTH_USER_MODEL = ''
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# X_FRAME_OPTIONS = 'SAMEORIGIN'
+# LOGIN_REDIRECT_URL = '/'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_FORMS = {'signup': 'users.forms.UserCreationForm'}
