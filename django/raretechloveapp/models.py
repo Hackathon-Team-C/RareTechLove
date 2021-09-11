@@ -79,10 +79,19 @@ class ArticleMST(models.Model):
         ('プログラミング', 'プログラミング'),
     )
 
+    # 難易度の選択肢
+    LEVEL_CHOICES = (
+        ('初級', '初級'),
+        ('中級', '中級'),
+        ('上級', '上級'),
+    )
+
     # 記事リンク先URL
     article_url = models.URLField()
     # スプレッドシートでの記事のカテゴリ
     category = models.CharField(max_length=255, verbose_name="カテゴリ", choices=CATEGORY_CHOICES)
+    # 記事の難易度
+    level = models.CharField(max_length=255, verbose_name="難易度", choices=LEVEL_CHOICES)
 
     # タイトルに記事リンク先URLを表示する
     def __str__(self):
@@ -102,6 +111,12 @@ class ArticleMST(models.Model):
         except:
             return False
 
+    def get_level(self):
+        try:
+            return self.level
+        except:
+            return False
+
 
     ## setter
     def set_article_url(self, article_url):
@@ -112,6 +127,11 @@ class ArticleMST(models.Model):
     def set_category(self, category):
         if category is not None:
             self.category = category
+            self.save()
+
+    def set_level(self, level):
+        if level is not None:
+            self.level = level
             self.save()
 
 
