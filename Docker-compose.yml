@@ -5,7 +5,7 @@ services:
     image: nginx:1.21.3
     container_name: nginx
     ports:
-      - "1318:80"
+      - "8000:8000"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
@@ -29,12 +29,12 @@ services:
   django:
     build: ./django
     container_name: django
-    command: uwsgi --socket :8000 --module raretechlove.wsgi --py-autoreload 1 --logto /tmp/mylog.log
+    command: uwsgi --socket :8001 --module raretechlove.wsgi --py-autoreload 1 --logto /tmp/mylog.log
     volumes:
       - ./django:/code
       - ./static:/static
     expose:
-      - "8000"
+      - "8001"
     env_file:
       - ./django/.env
     depends_on:
