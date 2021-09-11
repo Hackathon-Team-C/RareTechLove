@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
 from django.db import models
@@ -44,6 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')

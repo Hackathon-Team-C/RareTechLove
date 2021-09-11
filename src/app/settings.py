@@ -127,14 +127,14 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# # AUTH_USER_MODEL = ''
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# X_FRAME_OPTIONS = 'SAMEORIGIN'
-# LOGIN_REDIRECT_URL = '/'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_FORMS = {'signup': 'users.forms.UserCreationForm'}
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'raretechlove.User'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+LOGIN_REDIRECT_URL = '/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_FORMS = {'signup': 'users.forms.UserCreationForm'}
