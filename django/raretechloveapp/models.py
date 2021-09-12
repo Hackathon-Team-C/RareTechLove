@@ -10,7 +10,7 @@ class UserMST(models.Model):
     # Slackの表示名
     slack_name = models.CharField(max_length=255)
     # 300本ノックのスプレッドシートのURL
-    spread_url = models.URLField()
+    spread_url = models.URLField(null=True, blank=True)
 
     # タイトルにSlackの表示名を表示する
     def __str__(self):
