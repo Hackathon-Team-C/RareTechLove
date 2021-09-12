@@ -1,4 +1,6 @@
 from django.db import models
+#ユーザー認証
+#from django.contrib.auth.models import User
 
 # 利用者マスタ
 class UserMST(models.Model):
@@ -299,13 +301,16 @@ class QuestionTBL(models.Model):
     # タイムスタンプID
     ts_cd = models.DateTimeField(null=True, blank=True)
     # 記事番号(スプレッドシートマスタから取得)
-    article_cd = models.ForeignKey(ArticleMST, on_delete=models.PROTECT)
+    #article_cd = models.ForeignKey(ArticleMST, on_delete=models.PROTECT)
+    article_cd = models.IntegerField()
     # Slackの質問者・回答者(利用者マスタから取得)
-    user_cd = models.ForeignKey(UserMST, on_delete=models.PROTECT)
+    user_cd=models.IntegerField()
+    #user_cd = models.ForeignKey(UserMST, on_delete=models.PROTECT)
     # Slackの質問内容
     question_thread = models.TextField()
     # Slackの投稿日時
-    ts = models.DateTimeField()
+    #ts = models.DateTimeField()
+    ts=models.CharField(max_length=100)
     # 質問者(1)・回答者(0)
     qa_dist = models.BooleanField()
 

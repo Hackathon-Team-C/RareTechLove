@@ -27,7 +27,7 @@
         {% csrf_token %}
         <!-- <input type="text" name='email' placeholder="ログイン用メールアドレス">
         <input type="password" name='password' placeholder="パスワード"> -->
-        <a href="{% url 'index' %}" class="btn2">ログイン</a>
+        <button class="btn2" type="submit">ログイン</button>
         <div class="dec">
           <p>登録がお済みで無い方は</p>
           <a class="btn" href="{% url 'signup' %}">新規登録</a>

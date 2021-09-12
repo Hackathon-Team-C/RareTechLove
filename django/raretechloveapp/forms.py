@@ -5,7 +5,12 @@ from django.contrib.auth.forms import AuthenticationForm
 class CreateUser(forms.ModelForm):
     class Meta():
         model = UserMST # モデルのインスタンスを生成
-        fields = '__all__'
+        #fields = '__all__'
+        fields = ('user_name', 'pw' )
+        labels={
+           'user_name':'SlackID',
+           'pw':'パスワード',
+           }
 
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):

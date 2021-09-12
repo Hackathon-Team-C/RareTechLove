@@ -5,13 +5,14 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.db import IntegrityError
 from django.views.generic import TemplateView
-from django.views.generic import ListView
+from django.views.generic import ListView,CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 #from .forms import UserCreateForm
 from .forms import LoginForm
 from .forms import CreateUser
+from raretechloveapp.modules import slack
 from django.contrib.auth import (
      get_user_model, logout as auth_logout,
 )
@@ -28,55 +29,66 @@ import os
 
 # f = open(json_path, 'r')
 
-class signup(TemplateView):
+class raretechlovesignup(TemplateView):
     def post(self, request):
-        database = UserMST()
-        form = CreateUser(request.POST, instance=database)
-        form.save()
-        user_name = request.POST.get('user_name')
-        pw = request.POST.get('pw')
-        user = User.objects.create_user(user_name,'',pw)
+        #form = CreateUser(request.POST, instance=database)
+        # form.save()
+        username = request.POST.get('user_name')
+        password = request.POST.get('pw')
+        slack_name = slack.get_user_name(username)
+        spread_url = 'https://example.com'
+        UserMST.objects.create(user_name=username,pw=password,slack_name=slack_name,spread_url=spread_url)
+        user = User.objects.create_user(username,'',password)
+
         if user is not None:
-            #ログイン
-            login(request, user)
-            return render(request, 'raretechloveapp/index.html', {'form': form})
+            return redirect('login')
         else:
-            return render(request, 'raretechloveapp/signup.html', {'form': form})
-        login(request, user)
-        return render(request, 'raretechloveapp/index.html', {'form': form})
+            return render(request, 'raretechloveapp/signup.html')
 
     def get(self, request):
         form = CreateUser()
         return render(request, 'raretechloveapp/signup.html', {'form': form})
 
-class top(TemplateView):
+class top(LoginRequiredMixin,TemplateView):
     def get(self, request, *args, **kwargs):
-        return render(request, 'raretechloveapp/index.html', {})
+        self.params["obj"] = get_reply(request.GET.get("TS_CD"))
+        return render(request, 'raretechloveapp/index.html', self.params)
     def post(self, request, *args, **kwargs):
         return render(request, 'raretechloveapp/index.html', {})
 
 
-class login(TemplateView):
+class raretechlovelogin(TemplateView):
     def get(self, request, *args, **kwargs):
         form = LoginForm(request.POST or None)
-        user_name = request.POST.get('user_name')
-        pw = request.POST.get('pw')
-        user = authenticate(request, username=user_name, password=pw)
-        return render(request, 'raretechloveapp/login.html',  {'form': form})
+        if request.user.is_anonymous:
+            return render(request, 'raretechloveapp/login.html',  {'form': form})
+        else :
+            return redirect('index')
+
     def post(self, request, *args, **kwargs):
         form = LoginForm(request.POST or None)
-        return render(request, 'raretechloveapp/login.html',  {'form': form})
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
 
-class logout(TemplateView):
+        if user.is_anonymous:
+             login(request, user)
+             return redirect('/')
+        else :
+            return render(request, 'raretechloveapp/login.html',  {'form': form})
+
+class raretechlovelogout(TemplateView):
     def get(self, request, *args, **kwargs):
-        return render(request, 'raretechloveapp/login.html', {})
+        logout(request)
+        return redirect('login')
     def post(self, request, *args, **kwargs):
         logout(request)
-        return render(request, 'raretechloveapp/login.html', {})
+        return redirect('login')
 
-class mypage(TemplateView):
+class raretechlovemypage(TemplateView):
     def get(self, request, *args, **kwargs):
-        return render(request, 'raretechloveapp/index.html', {})
+        return render(request, 'raretechloveapp/mypage.html', {})
     def post(self, request, *args, **kwargs):
-        return render(request, 'raretechloveapp/index.html', {})
+        return render(request, 'raretechloveapp/mypage.html', {})
+
 

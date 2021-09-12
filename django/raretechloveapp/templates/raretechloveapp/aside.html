@@ -6,7 +6,7 @@
     </div>
     <p class="slack_name">slack name</p>
     <div class="name_box">
-      <p>{{ user.username }}</p>
+      <p>{{ request.user }}</p>
     </div>
     <nav>
       <ul>
@@ -20,7 +20,7 @@
         {% else %}
         <li class="mypage"><a href="{% url 'mypage' %}">マイページ</a></li>
         {% endif %}
-        <li class="logout"><a href="{% url 'login' %}">ログアウト</a></li>
+        <li class="logout"><a href="{% url 'logout' %}">ログアウト</a></li>
       </ul>
     </nav>
   </div>
