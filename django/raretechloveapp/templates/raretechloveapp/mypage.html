@@ -4,15 +4,15 @@
 <main>
   <div class="main_box">
     <div class="number box">
-      <p class="title">田中 太郎</p>
+      <p class="title">{{my_slack_name}}</p>
       <div class="number_box">
         <div class="question_box">
           <p>質問数</p>
-          <p class="big">30 <span>件</span></p>
+          <p class="big">{{question_count}} <span>件</span></p>
         </div>
         <div class="answer_box">
           <p>回答数</p>
-          <p class="big">5 <span>件</span></p>
+          <p class="big">{{answer_count}}<span>件</span></p>
         </div>
       </div>
     </div>
@@ -25,60 +25,26 @@
         <label class="tab_item" for="answer_item">新着回答</label>
         <div class="tab_content" id="question_content">
           <ul>
+            {% for new in news %}
             <li>
-              <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
-">回答者<span class="name">田中太郎</span></span></div>
-              <a href="st.html">RareTECHで質問をする勇気がないのですが、どうすれば質問ができるようになるのでしょうかという意味不明な質問を...</a>
+              <div class="post_meta"><span class="post_number">記事番号【{{new.article_cd}}】</span>
+                <span class="respondent">質問者<span class="name">{{new.user_cd}}</span></span>
+              </div>
+              <a href="/post?ts_cd={{ new.ts_cd }}">{{new.question_thread}}</a>
             </li>
-            <li>
-              <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
-">回答者<span class="name">田中太郎</span></span></div>
-              <a href="st.html">RareTECHで質問をする勇気がないのですが、どうすれば質問ができるようになるのでしょうかという意味不明な質問を...</a>
-            </li>
-            <li>
-              <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
-">回答者<span class="name">田中太郎</span></span></div>
-              <a href="st.html">RareTECHで質問をする勇気がないのですが、どうすれば質問ができるようになるのでしょうかという意味不明な質問を...</a>
-            </li>
-            <li>
-              <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
-">回答者<span class="name">田中太郎</span></span></div>
-              <a href="st.html">RareTECHで質問をする勇気がないのですが、どうすれば質問ができるようになるのでしょうかという意味不明な質問を...</a>
-            </li>
-            <li>
-              <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
-">回答者<span class="name">田中太郎</span></span></div>
-              <a href="st.html">RareTECHで質問をする勇気がないのですが、どうすれば質問ができるようになるのでしょうかという意味不明な質問を...</a>
-            </li>
+            {% endfor %}
           </ul>
         </div>
         <div class="tab_content" id="answer_content">
           <ul>
+            {% for new in news2 %}
             <li>
-              <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
-">回答者<span class="name">田中太郎</span></span></div>
-              <a href="st.html">受講生の頑張りようがすごいので見習いたいのですが怠けてしまいがちな私に喝を入れてもらってもいいでしょうか。ハッカソンしながらも記事のっく２０本、...</a>
+              <div class="post_meta"><span class="post_number">記事番号【{{new.article_cd}}】</span>
+                <span class="respondent">質問者<span class="name">{{new.user_cd}}</span></span>
+              </div>
+              <a href="/post?ts_cd={{ new.ts_cd }}">{{new.question_thread}}</a>
             </li>
-            <li>
-              <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
-">回答者<span class="name">田中太郎</span></span></div>
-              <a href="st.html">受講生の頑張りようがすごいので見習いたいのですが怠けてしまいがちな私に喝を入れてもらってもいいでしょうか。ハッカソンしながらも記事のっく２０本、...</a>
-            </li>
-            <li>
-              <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
-">回答者<span class="name">田中太郎</span></span></div>
-              <a href="st.html">受講生の頑張りようがすごいので見習いたいのですが怠けてしまいがちな私に喝を入れてもらってもいいでしょうか。ハッカソンしながらも記事のっく２０本、...</a>
-            </li>
-            <li>
-              <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
-">回答者<span class="name">田中太郎</span></span></div>
-              <a href="st.html">受講生の頑張りようがすごいので見習いたいのですが怠けてしまいがちな私に喝を入れてもらってもいいでしょうか。ハッカソンしながらも記事のっく２０本、...</a>
-            </li>
-            <li>
-              <div class="post_meta"><span class="post_number">記事番号【123456】</span><span class="respondent
-">回答者<span class="name">田中太郎</span></span></div>
-              <a href="st.html">受講生の頑張りようがすごいので見習いたいのですが怠けてしまいがちな私に喝を入れてもらってもいいでしょうか。ハッカソンしながらも記事のっく２０本、...</a>
-            </li>
+            {% endfor %}
           </ul>
         </div>
       </div>

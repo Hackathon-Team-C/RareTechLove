@@ -1,29 +1,14 @@
-from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
-from django.urls import reverse_lazy, reverse
-from django.views import generic
-from django.db import IntegrityError
 from django.views.generic import TemplateView
-from django.views.generic import ListView,CreateView
+from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-#from .forms import UserCreateForm
 from .forms import LoginForm
 from .forms import CreateUser
 from raretechloveapp.modules import slack
-from django.contrib.auth import (
-     get_user_model, logout as auth_logout,
-)
 from .models import UserMST
-from .models import ArticleMST
-User = get_user_model()
-import json
-import requests
-import re
-import os
-
+from .models import QuestionTBL
 # module_dir = os.path.dirname(__file__) # views.pyのあるディレクトリを取得
 # json_path = os.path.join(module_dir, 'jojo.json')
 
@@ -50,11 +35,17 @@ class raretechlovesignup(TemplateView):
         return render(request, 'raretechloveapp/signup.html', {'form': form})
 
 class top(LoginRequiredMixin,TemplateView):
+    def __init__(self):
+        self.params = {}
     def get(self, request, *args, **kwargs):
-        self.params["obj"] = get_reply(request.GET.get("TS_CD"))
-        return render(request, 'raretechloveapp/index.html', self.params)
+        self.params["news"] = slack.get_channel_histry(5,0)
+        u = UserMST.objects.get(user_name=request.user)
+        self.params['my_slack_name'] =u.slack_name
+        return render(request, "raretechloveapp/index.html",self.params)
     def post(self, request, *args, **kwargs):
-        return render(request, 'raretechloveapp/index.html', {})
+        u = UserMST.objects.get(user_name=request.user)
+        self.params['my_slack_name'] =u.slack_name
+        return render(request, "raretechloveapp/index.html", self.params)
 
 
 class raretechlovelogin(TemplateView):
@@ -63,7 +54,7 @@ class raretechlovelogin(TemplateView):
         if request.user.is_anonymous:
             return render(request, 'raretechloveapp/login.html',  {'form': form})
         else :
-            return redirect('index')
+            return redirect('/')
 
     def post(self, request, *args, **kwargs):
         form = LoginForm(request.POST or None)
@@ -85,10 +76,54 @@ class raretechlovelogout(TemplateView):
         logout(request)
         return redirect('login')
 
-class raretechlovemypage(TemplateView):
+class raretechlovepost(LoginRequiredMixin,TemplateView):
+    def __init__(self):
+        self.params = {}
     def get(self, request, *args, **kwargs):
-        return render(request, 'raretechloveapp/mypage.html', {})
+        self.params["obj"] = slack.get_reply(self.request.GET.get("ts_cd"))
+        u = UserMST.objects.get(user_name=request.user)
+        self.params['my_slack_name'] =u.slack_name
+        return render(request, "raretechloveapp/post.html",self.params)
     def post(self, request, *args, **kwargs):
-        return render(request, 'raretechloveapp/mypage.html', {})
+        self.params["obj"] = slack.get_reply(self.request.GET.get("ts_cd"))
+        u = UserMST.objects.get(user_name=request.user)
+        self.params['my_slack_name'] =u.slack_name
+        return render(request, "raretechloveapp/post.html",self.params)
+
+
+class raretechlovesearch(LoginRequiredMixin,ListView):
+    model = QuestionTBL
+    paginate_by = 10
+    template_name = 'raretechloveapp/search.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        u = UserMST.objects.get(user_name=self.request.user)
+        context['my_slack_name'] =u.slack_name
+        context['count'] = QuestionTBL.objects.filter(article_cd =self.request.GET.get('article_cd')).count()
+        return context
+    def get_queryset(self,**kwargs):
+       queryset = super().get_queryset(**kwargs)
+
+       keyword = self.request.GET.get('article_cd')
+       if keyword is not None:
+            queryset = queryset.filter(article_cd=keyword)
+
+       return queryset
+
+class raretechlovemypage(LoginRequiredMixin,TemplateView):
+    def __init__(self):
+        self.params = {}
+    def get(self, request, *args, **kwargs):
+        u = UserMST.objects.get(user_name=request.user)
+        self.params['my_slack_name'] =u.slack_name
+        self.params["news"] = slack.get_channel_histry(10,0,u.id,1)
+        self.params["news2"] = slack.get_channel_histry(10,0,u.id,2)
+        self.params['question_count'] =slack.question_count(u.id)
+        self.params['answer_count'] =slack.answer_count(u.id)
+        return render(request, 'raretechloveapp/mypage.html',self.params)
+    def post(self, request, *args, **kwargs):
+        u = UserMST.objects.get(user_name=request.user)
+        self.params['my_slack_name'] =u.slack_name
+        return render(request, 'raretechloveapp/mypage.html',self.params)
 
 

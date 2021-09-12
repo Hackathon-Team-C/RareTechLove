@@ -5,6 +5,8 @@ from .views import top
 from .views import raretechlovelogin
 from .views import raretechlovelogout
 from .views import raretechlovemypage
+from .views import raretechlovesearch
+from .views import raretechlovepost
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -14,5 +16,6 @@ urlpatterns = [
     path('logout/',raretechlovelogout.as_view(), name='logout'),
     path("signup/", raretechlovesignup.as_view(), name="signup"),
     path("mypage/", raretechlovemypage.as_view(), name="mypage"),
-    # url(r"list", RareTechLoveView.as_view(), name="list"),
+    path("search/", raretechlovesearch.as_view(), name="search"),
+    path("post/", raretechlovepost.as_view(), name="post"),
 ]

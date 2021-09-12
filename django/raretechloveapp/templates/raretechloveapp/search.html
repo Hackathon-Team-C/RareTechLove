@@ -3,17 +3,17 @@
 {% include 'raretechloveapp/header.html' %}
 <main>
   <div class="main_box">
-    <p class="search_title" data-text="">記事番号{{ARTICLE_CD}}の検索結果 1ページ目</p>
+    <p class="search_title" data-text="">記事番号{{article_cd}}の検索結果 1ページ目</p>
     <div class="question box">
-      {% if obj == -1 %}
+      {% if count == 0 %}
       <p>検索結果は見つかりませんでした</p>
       {% else %}
       <ul>
-        {% for o in obj %}
+        {% for o in object_list %}
         <li>
-          <div class="post_meta"><span class="post_number">記事番号【{{o.postnumber}}】</span><span class="respondent
-              ">質問者<span class="name">{{o.name}}</span></span></div>
-          <a href="/post?TS_CD={{ o.ts }}">{{o.text}}</a>
+          <div class="post_meta"><span class="post_number">記事番号【{{o.article_cd}}】</span><span class="respondent
+              ">質問者<span class="name">{{o.slack_name}}</span></span></div>
+          <a href="/post?ts_cd={{ o.ts }}">{{o.question_thread}}</a>
         </li>
         {% endfor %}
       </ul>

@@ -1,7 +1,6 @@
 from django.db import models
 #ユーザー認証
-#from django.contrib.auth.models import User
-
+# from django.contrib.auth.models import User
 # 利用者マスタ
 class UserMST(models.Model):
 
@@ -299,7 +298,7 @@ class QcountTBL(models.Model):
 class QuestionTBL(models.Model):
 
     # タイムスタンプID
-    ts_cd = models.DateTimeField(null=True, blank=True)
+    ts_cd = models.IntegerField(null=True, blank=True)
     # 記事番号(スプレッドシートマスタから取得)
     #article_cd = models.ForeignKey(ArticleMST, on_delete=models.PROTECT)
     article_cd = models.IntegerField()

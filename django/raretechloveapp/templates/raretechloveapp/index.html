@@ -19,10 +19,10 @@
       <ul>
         {% for new in news %}
         <li>
-          <div class="post_meta"><span class="post_number">記事番号【{{new.postnumber}}】</span>
-            <span class="respondent">質問者<span class="name">{{new.name}}</span></span>
+          <div class="post_meta"><span class="post_number">記事番号【{{new.article_cd}}】</span>
+            <span class="respondent">質問者<span class="name">{{new.user_cd}}</span></span>
           </div>
-          <a href="/post?TS_CD={{ new.ts }}">{{new.text}}</a>
+          <a href="/post?ts_cd={{ new.ts_cd }}">{{new.question_thread}}</a>
         </li>
         {% endfor %}
       </ul>

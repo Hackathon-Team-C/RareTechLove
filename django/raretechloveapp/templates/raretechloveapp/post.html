@@ -4,22 +4,21 @@
 <main>
   <div class="main_box">
     {% for o in obj %}
-    {% if forloop.counter0 == 0 %}
+    {% if o.qa_dist == True %}
     <div class="question_st box">
       <div class="meta_box">
-        <p class="post_number">記事番号【{{o.postnumber}}】</p>
-        <p>質問者 <span class="name">{{o.name}}</span></p>
+        <p class="post_number">記事番号【{{o.article_cd}}】</p>
+        <p>質問者 <span class="name">{{ o.user_cd }}</span></p>
       </div>
-      <p>{{o.text}}</p>
-    </div>
-    {% else %}
-    <div class="answer_st box">
-      <div class="answer">
-        <p>回答者 <span class="name">{{o.name}}</span></p>
-      </div>
-      <p>{{o.text}}</p>
+      <p>{{o.question_thread}}</p>
     </div>
     {% endif %}
+    <div class="answer_st box">
+      <div class="answer">
+        <p>回答者 <span class="name">{{o.user_cd}}</span></p>
+      </div>
+      <p>{{o.question_thread}}</p>
+    </div>
     {% endfor %}
 </main>
 {% include 'raretechloveapp/aside.html' %}
