@@ -25,6 +25,10 @@ class raretechlovesignup(TemplateView):
         slack_name = slack.get_user_name(username)
         spread_url = 'https://example.com'
 
+        if slack_name == False:
+            form.add_error(None, 'そのようなSlackIDは見たことがありません！是非ともお見せしていただきたいですね')
+            return render(request, 'raretechloveapp/signup.html', {'form': form})
+
         if UserMST.objects.get(user_name=username):
             form.add_error(None, '残念ながらあなたのSlackIDは何者かによって登録されていますので登録できません、人生早い者勝ちなのです。')
             return render(request, 'raretechloveapp/signup.html', {'form': form})
