@@ -11,8 +11,13 @@
       <ul>
         {% for o in object_list %}
         <li>
-          <div class="post_meta"><span class="post_number">記事番号【{{o.article_cd}}】</span><span class="respondent
-              ">質問者<span class="name">{{o.slack_name}}</span></span></div>
+          <div class="post_meta"><span class="post_number"><a
+                href="{{o.article_cd.article_url}}">記事番号【{{o.article_cd.id}}】</a></span>
+            <!-- <span class="category">{{o.article_cd.category}}</span>
+            <span class="level">{{o.article_cd.level}}</span> -->
+            <span class="respondent
+              ">質問者<span class="name">{{o.user_cd.slack_name}}</span></span>
+          </div>
           <a href="/post?ts_cd={{ o.ts }}">{{o.question_thread}}</a>
         </li>
         {% endfor %}

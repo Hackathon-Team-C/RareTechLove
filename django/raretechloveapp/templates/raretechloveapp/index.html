@@ -6,10 +6,12 @@
     <div class="news box">
       <p class="title" data-text="NEWS">- 新着情報 -</p>
       <ul>
-        <li><span class="cat">サイト開設</span><time class="time" datetime="">2020/8/18</time><span>サイトを開設しました</span>
+        <li><span class="cat">衝撃</span><time class="time"
+            datetime="">2020/9/2</time><span>講師に後ろから刺されるという衝撃を受ける。獅子の子落としとはこのことを言うのか。
+          </span>
         </li>
-        <li><span class="cat">サイト開設</span><time class="time" datetime="">2020/8/18</time><span>機能を追加しました。詳しくは<a
-              href="post.html">こちら</a></span>
+        <li><span class="cat">サイト開設</span><time class="time" datetime="">2020/9/15</time><span>記事ノックについては載せる予定でしたが<a
+              href="https://portal.raretech.site/" target='_blank'>こちら</a>に移動しました！<br>ぜひ楽しんでくださいね！</span>
         </li>
       </ul>
     </div>
@@ -19,8 +21,8 @@
       <ul>
         {% for new in news %}
         <li>
-          <div class="post_meta"><span class="post_number">記事番号【{{new.article_cd}}】</span>
-            <span class="respondent">質問者<span class="name">{{new.user_cd}}</span></span>
+          <div class="post_meta"><span class="post_number">記事番号【{{new.article_cd.id}}】</span>
+            <span class="respondent">質問者<span class="name">{{new.user_cd.slack_name}}</span></span>
           </div>
           <a href="/post?ts_cd={{ new.ts_cd }}">{{new.question_thread}}</a>
         </li>

@@ -9,6 +9,7 @@ from .forms import CreateUser
 from raretechloveapp.modules import slack
 from .models import UserMST
 from .models import QuestionTBL
+from .models import ArticleMST
 # module_dir = os.path.dirname(__file__) # views.pyのあるディレクトリを取得
 # json_path = os.path.join(module_dir, 'jojo.json')
 
@@ -106,7 +107,7 @@ class raretechlovesearch(LoginRequiredMixin,ListView):
 
        keyword = self.request.GET.get('article_cd')
        if keyword is not None:
-            queryset = queryset.filter(article_cd=keyword)
+            queryset = queryset.filter(article_cd=keyword,qa_dist=True)
 
        return queryset
 

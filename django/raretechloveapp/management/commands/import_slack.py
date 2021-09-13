@@ -4,6 +4,7 @@ import requests
 from django.utils import timezone
 from ...models import QuestionTBL
 from ...models import UserMST
+from ...models import ArticleMST
 import os
 import re
 
@@ -62,7 +63,7 @@ class Command(BaseCommand):
                       if firstLoop:
                           if match :
                             item2['qa_dist']= True
-                            item2['postnumber'] = match.group()
+                            item2['postnumber'] = int(match.group())
                             item2['text'] = re.sub('(?<=【)*[0-9０-９]+?(?=】)', '', item2['text'])
                             item2['text'] = re.sub('【記事番号】', '', item2['text'])
                             # 記事番号(スプレッドシートマスタから取得)
@@ -90,5 +91,7 @@ class Command(BaseCommand):
                         # Slackの投稿日時
                         tsdesu = item2['ts']
                       ts_cd= latast_record
-                      QuestionTBL.objects.create(qa_dist=qa,ts=tsdesu,question_thread=qt,user_cd=uc,article_cd=ac,ts_cd=ts_cd)
+                      article_cd =ArticleMST.objects.get(id=ac)
+                      user_cd=UserMST.objects.get(id=uc)
+                      QuestionTBL.objects.filter().create(qa_dist=qa,ts=tsdesu,question_thread=qt,user_cd=user_cd,article_cd=article_cd,ts_cd=ts_cd)
         get_channel_histry(self)
