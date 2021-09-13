@@ -2,7 +2,8 @@ import os
 import requests
 import re
 from ..models import QuestionTBL
-
+from ..models import UserMST
+from ..models import ArticleMST
 #test
 def test():
   return 'test'
@@ -19,26 +20,31 @@ def answer_count(user_cd):
 
 
 #channelのtsを取得
-def get_channel_histry(limit=1000,post_id=0,user_cd=None,qa_dist=1):
-  k=False
-  if qa_dist ==1 :
-    k=True
-  items = QuestionTBL.objects.filter(qa_dist=k)
+def get_channel_histry(limit=1000,post_id=0,user_cd=0,qa_dist=1):
+
+  if qa_dist == 2 :
+     qa_dist=False
+  items = QuestionTBL.objects.filter(qa_dist=qa_dist)
   cnt = 0
   ts=[]
-  for item in items:
-    if cnt < limit :
-      if user_cd and user_cd == item.user_cd :
-        if item.article_cd == post_id:
-            ts.append(item)
-        elif post_id == 0 :
-            ts.append(item)
-      else:
-        if item.article_cd == post_id:
-            ts.append(item)
-        elif post_id == 0 :
-            ts.append(item)
-    cnt=1+cnt
+  if user_cd != 0 :
+    for item in items:
+      if cnt < limit :
+        if user_cd == item.user_cd_id :
+          if item.article_cd == post_id:
+              ts.append(item)
+          elif post_id == 0 :
+              ts.append(item)
+        cnt=1+cnt
+    return ts
+  else :
+    for item in items:
+      if cnt < limit :
+          if item.article_cd == post_id:
+              ts.append(item)
+          elif post_id == 0 :
+              ts.append(item)
+      cnt=1+cnt
   return ts
 
 def get_reply(ts_cd):

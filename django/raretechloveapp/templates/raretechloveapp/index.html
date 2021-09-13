@@ -21,8 +21,10 @@
       <ul>
         {% for new in news %}
         <li>
-          <div class="post_meta"><span class="post_number">記事番号【{{new.article_cd.id}}】</span>
-            <span class="respondent">質問者<span class="name">{{new.user_cd.slack_name}}</span></span>
+          <div class="post_meta"><span class="post_number"><a
+                href="{{new.article_cd.ariticle_url}}">記事番号【{{new.article_cd.id}}】</a></span>
+            <span class="respondent">質問者<span class="name"><a
+                  href="/mypage?uname={{new.user_cd.id}}">{{new.user_cd.slack_name}}</a></span></span>
           </div>
           <a href="/post?ts_cd={{ new.ts_cd }}">{{new.question_thread}}</a>
         </li>

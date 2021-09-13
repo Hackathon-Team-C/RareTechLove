@@ -12,13 +12,14 @@
       </div>
       <p>{{o.question_thread}}</p>
     </div>
-    {% endif %}
+    {% else %}
     <div class="answer_st box">
       <div class="answer">
         <p>回答者 <span class="name">{{o.user_cd.slack_name}}</span></p>
       </div>
       <p>{{o.question_thread}}</p>
     </div>
+    {% endif %}
     {% endfor %}
 </main>
 {% include 'raretechloveapp/aside.html' %}

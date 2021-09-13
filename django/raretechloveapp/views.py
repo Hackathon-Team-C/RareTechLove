@@ -19,17 +19,24 @@ class raretechlovesignup(TemplateView):
     def post(self, request):
         #form = CreateUser(request.POST, instance=database)
         # form.save()
+        form = CreateUser(request.POST)
         username = request.POST.get('user_name')
         password = request.POST.get('pw')
         slack_name = slack.get_user_name(username)
         spread_url = 'https://example.com'
+
+        if UserMST.objects.get(user_name=username):
+            form.add_error(None, '残念ながらあなたのSlackIDは何者かによって登録されていますので登録できません、人生早い者勝ちなのです。')
+            return render(request, 'raretechloveapp/signup.html', {'form': form})
+
         UserMST.objects.create(user_name=username,pw=password,slack_name=slack_name,spread_url=spread_url)
         user = User.objects.create_user(username,'',password)
 
         if user is not None:
             return redirect('login')
         else:
-            return render(request, 'raretechloveapp/signup.html')
+            form.add_error(None, 'そんなslackIDなんて存在しませんよ！！')
+            return render(request, 'raretechloveapp/signup.html', {'form': form})
 
     def get(self, request):
         form = CreateUser()
@@ -67,6 +74,7 @@ class raretechlovelogin(TemplateView):
              login(request, user)
              return redirect('/')
         else :
+            form.add_error(None, 'パスワードをお忘れになりましたか？残念ながら一度忘れたIDは戻ってきません、現実は厳しいのです、あきらめましょう')
             return render(request, 'raretechloveapp/login.html',  {'form': form})
 
 class raretechlovelogout(TemplateView):
@@ -115,8 +123,15 @@ class raretechlovemypage(LoginRequiredMixin,TemplateView):
     def __init__(self):
         self.params = {}
     def get(self, request, *args, **kwargs):
-        u = UserMST.objects.get(user_name=request.user)
-        self.params['my_slack_name'] =u.slack_name
+        if self.request.GET.get("uname") :
+            u = UserMST.objects.get(id=self.request.GET.get("uname"))
+            u1 = UserMST.objects.get(user_name=request.user)
+            self.params['my_slack_name'] =u1.slack_name
+            self.params['slack'] = u.slack_name
+        else:
+            u = UserMST.objects.get(user_name=request.user)
+            self.params['my_slack_name'] =u.slack_name
+            self.params['slack'] = u.slack_name
         self.params["news"] = slack.get_channel_histry(10,0,u.id,1)
         self.params["news2"] = slack.get_channel_histry(10,0,u.id,2)
         self.params['question_count'] =slack.question_count(u.id)

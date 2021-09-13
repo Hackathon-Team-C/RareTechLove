@@ -4,7 +4,7 @@
 <main>
   <div class="main_box">
     <div class="number box">
-      <p class="title">{{my_slack_name}}</p>
+      <p class="title">{{slack}}</p>
       <div class="number_box">
         <div class="question_box">
           <p>質問数</p>
@@ -27,7 +27,8 @@
           <ul>
             {% for new in news %}
             <li>
-              <div class="post_meta"><span class="post_number">記事番号【{{new.article_cd}}】</span>
+              <div class="post_meta"><span class="post_number"><a
+                    href="{{new.article_cd.article_url}}">記事番号【{{new.article_cd.id}}】</a></span>
                 <span class="respondent">質問者<span class="name">{{new.user_cd}}</span></span>
               </div>
               <a href="/post?ts_cd={{ new.ts_cd }}">{{new.question_thread}}</a>
@@ -39,7 +40,8 @@
           <ul>
             {% for new in news2 %}
             <li>
-              <div class="post_meta"><span class="post_number">記事番号【{{new.article_cd}}】</span>
+              <div class="post_meta"><span class="post_number"><a
+                    href="{{new.article_cd.article_url}}">記事番号【{{new.article_cd.id}}】</a></span>
                 <span class="respondent">質問者<span class="name">{{new.user_cd}}</span></span>
               </div>
               <a href="/post?ts_cd={{ new.ts_cd }}">{{new.question_thread}}</a>
