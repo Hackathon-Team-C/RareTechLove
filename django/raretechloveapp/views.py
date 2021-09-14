@@ -53,10 +53,12 @@ class top(LoginRequiredMixin,TemplateView):
         self.params["news"] = slack.get_channel_histry(5,0)
         u = UserMST.objects.get(user_name=request.user)
         self.params['my_slack_name'] =u.slack_name
+        self.params['all_user'] = UserMST.objects.all()
         return render(request, "raretechloveapp/index.html",self.params)
     def post(self, request, *args, **kwargs):
         u = UserMST.objects.get(user_name=request.user)
         self.params['my_slack_name'] =u.slack_name
+        self.params['all_user'] = UserMST.objects.all()
         return render(request, "raretechloveapp/index.html", self.params)
 
 
@@ -95,31 +97,46 @@ class raretechlovepost(LoginRequiredMixin,TemplateView):
     def get(self, request, *args, **kwargs):
         self.params["obj"] = slack.get_reply(self.request.GET.get("ts_cd"))
         u = UserMST.objects.get(user_name=request.user)
+        self.params['all_user'] = UserMST.objects.all()
         self.params['my_slack_name'] =u.slack_name
         return render(request, "raretechloveapp/post.html",self.params)
     def post(self, request, *args, **kwargs):
         self.params["obj"] = slack.get_reply(self.request.GET.get("ts_cd"))
         u = UserMST.objects.get(user_name=request.user)
+        self.params['all_user'] = UserMST.objects.all()
         self.params['my_slack_name'] =u.slack_name
         return render(request, "raretechloveapp/post.html",self.params)
 
 
 class raretechlovesearch(LoginRequiredMixin,ListView):
     model = QuestionTBL
-    paginate_by = 10
+    paginate_by = 1
     template_name = 'raretechloveapp/search.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         u = UserMST.objects.get(user_name=self.request.user)
         context['my_slack_name'] =u.slack_name
-        context['count'] = QuestionTBL.objects.filter(article_cd =self.request.GET.get('article_cd')).count()
+        keyword = self.request.GET.get('article_cd')
+        if keyword is not '':
+            context['count'] = QuestionTBL.objects.filter(article_cd =self.request.GET.get('article_cd')).count()
+        context['all_user'] = UserMST.objects.all()
+        context['user_cd'] =self.request.GET.get('user_cd')
         return context
     def get_queryset(self,**kwargs):
        queryset = super().get_queryset(**kwargs)
 
        keyword = self.request.GET.get('article_cd')
-       if keyword is not None:
-            queryset = queryset.filter(article_cd=keyword,qa_dist=True)
+       keyword2 = self.request.GET.get('user_cd')
+       if keyword is not '':
+            if keyword2 is not '':
+                queryset = queryset.filter(article_cd=keyword,user_cd=keyword2,qa_dist=True)
+            else:
+                queryset = queryset.filter(article_cd=keyword,qa_dist=True)
+       else :
+            if keyword2 is not '':
+                queryset = queryset.filter(user_cd=keyword2,qa_dist=True)
+            else:
+                queryset = queryset.filter(qa_dist=True)
 
        return queryset
 
@@ -140,10 +157,12 @@ class raretechlovemypage(LoginRequiredMixin,TemplateView):
         self.params["news2"] = slack.get_channel_histry(10,0,u.id,2)
         self.params['question_count'] =slack.question_count(u.id)
         self.params['answer_count'] =slack.answer_count(u.id)
+        self.params['all_user'] = UserMST.objects.all()
         return render(request, 'raretechloveapp/mypage.html',self.params)
     def post(self, request, *args, **kwargs):
         u = UserMST.objects.get(user_name=request.user)
         self.params['my_slack_name'] =u.slack_name
+        self.params['all_user'] = UserMST.objects.all()
         return render(request, 'raretechloveapp/mypage.html',self.params)
 
 

@@ -6,6 +6,12 @@
       <div class="header_inner">
         <form action="/search" method="GET" class="search">
           <p>検索記事番号</p>
+          <select name="user_cd" class='selectbox'>
+            <option value=''>全てのユーザー</option>
+            {% for user in all_user %}
+            <option value="{{ user.id }}">{{user.slack_name}}</option>
+            {% endfor %}
+          </select>
           <input type="number" name="article_cd" value="{{ request.GET.article_cd }}" min="1" max="300">
           <input type="submit" value="&#xf002;" class="search-button">
         </form>
