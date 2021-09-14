@@ -301,7 +301,7 @@ class QcountTBL(models.Model):
 class QuestionTBL(models.Model):
 
     # タイムスタンプID
-    ts_cd = models.IntegerField(null=True, blank=True)
+    ts_cd = models.BigIntegerField()
     # 記事番号(スプレッドシートマスタから取得)
     article_cd = models.ForeignKey(ArticleMST, on_delete=models.PROTECT)
     # Slackの質問者・回答者(利用者マスタから取得)
