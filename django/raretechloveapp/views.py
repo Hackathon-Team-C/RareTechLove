@@ -29,15 +29,29 @@ class raretechlovesignup(TemplateView):
             form.add_error(None, 'そのようなSlackIDは見たことがありません！是非ともお見せしていただきたいですね')
             return render(request, 'raretechloveapp/signup.html', {'form': form})
 
-        if UserMST.objects.get(user_name=username):
-            form.add_error(None, '残念ながらあなたのSlackIDは何者かによって登録されていますので登録できません、人生早い者勝ちなのです。')
-            return render(request, 'raretechloveapp/signup.html', {'form': form})
+        try:
+            if UserMST.objects.all().count() != 0 and UserMST.objects.get(user_name=username):
+                form.add_error(None, '残念ながらあなたのSlackIDは何者かによって登録されていますので登録できません、人生早い者勝ちなのです。')
+                return render(request, 'raretechloveapp/signup.html', {'form': form})
+        except UserMST.DoesNotExist:
+                    UserMST.objects.create(user_name=username,pw=password,slack_name=slack_name,spread_url=spread_url)
+                    user = User.objects.create_user(username,'',password)
+
+                    if user is not None:
+                        login(request, user)
+                        #slack.import_slack()
+                        return redirect('/')
+                    else:
+                        form.add_error(None, 'そんなslackIDなんて存在しませんよ！！')
+                        return render(request, 'raretechloveapp/signup.html', {'form': form})
 
         UserMST.objects.create(user_name=username,pw=password,slack_name=slack_name,spread_url=spread_url)
         user = User.objects.create_user(username,'',password)
 
         if user is not None:
-            return redirect('login')
+            login(request, user)
+            slack.import_slack()
+            return redirect('/')
         else:
             form.add_error(None, 'そんなslackIDなんて存在しませんよ！！')
             return render(request, 'raretechloveapp/signup.html', {'form': form})
@@ -110,7 +124,7 @@ class raretechlovepost(LoginRequiredMixin,TemplateView):
 
 class raretechlovesearch(LoginRequiredMixin,ListView):
     model = QuestionTBL
-    paginate_by = 1
+    paginate_by = 5
     template_name = 'raretechloveapp/search.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

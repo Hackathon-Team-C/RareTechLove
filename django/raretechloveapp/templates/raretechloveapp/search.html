@@ -26,7 +26,9 @@
       <ul class='pagination'>
         <!-- 前へ -->
         {% if page_obj.has_previous %}
-        <li><a href="/search?{{user_cd}}&article_cd={{article_cd}}&page={{ page_obj.previous_page_number }}">前へ</a></li>
+        <li><a
+            href="/search?user_cd={{user_cd}}&article_cd={{article_cd}}&page={{ page_obj.previous_page_number }}">前へ</a>
+        </li>
         {% endif %}
 
         {% for i in page_obj.paginator.page_range %}
@@ -39,7 +41,8 @@
 
         <!-- 次へ -->
         {% if page_obj.has_next %}
-        <li><a href="/search?{{user_cd}}&article_cd={{article_cd}}&page={{ page_obj.next_page_number }}">次へ</a></li>
+        <li><a href="/search?user_cd={{user_cd}}&article_cd={{article_cd}}&page={{ page_obj.next_page_number }}">次へ</a>
+        </li>
         {% endif %}
       </ul>
       {% endif %}
