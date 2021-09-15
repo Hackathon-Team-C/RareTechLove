@@ -27,6 +27,13 @@
                   href="/mypage?uname={{new.user_cd.id}}">{{new.user_cd.slack_name}}</a></span></span>
           </div>
           <a href="/post?ts_cd={{ new.ts_cd }}">{{new.question_thread}}</a>
+          <div class="last_meta">
+            <div class="sub">
+              <div class="category">{{new.article_cd.category}}</div>
+              <div class="level">{{new.article_cd.level}}</div>
+            </div>
+            <div class="time ts">{{new.ts}}</div>
+          </div>
         </li>
         {% endfor %}
       </ul>

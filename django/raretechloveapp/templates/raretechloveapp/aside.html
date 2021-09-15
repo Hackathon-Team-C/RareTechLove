@@ -12,12 +12,12 @@
     </div>
     <nav>
       <ul>
-        {% if r == 'index' %}
+        {% if request.path == '/' %}
         <li class="home current">トップページ</li>
         {% else %}
         <li class="home"><a href="{% url 'index' %}">トップページ</a></li>
         {% endif %}
-        {% if r == 'mypage' %}
+        {% if request.path == '/mypage/' %}
         <li class="mypage current">マイページ</li>
         {% else %}
         <li class="mypage"><a href="{% url 'mypage' %}">マイページ</a></li>

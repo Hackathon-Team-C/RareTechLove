@@ -3,19 +3,34 @@
 {% include 'raretechloveapp/header.html' %}
 <main>
   <div class="main_box">
+    <div class="breadcrumbs">
+      <ul>
+        <li><a href="/">HOME</a></li>
+        <li>記事投稿</li>
+      </ul>
+    </div>
     {% for o in obj %}
     {% if o.qa_dist == True %}
     <div class="question_st box">
+      <p class="title" data-text="POST THREAD">- 投稿 -</p>
       <div class="meta_box">
-        <p class="post_number">記事番号【{{o.article_cd.id}}】</p>
-        <p>質問者 <span class="name">{{ o.user_cd.slack_name }}</span></p>
+        <p class="post_number"><a href="{{o.article_cd.article_url}}">記事番号【{{o.article_cd.id}}】</a></p>
+        <p>質問者 <span class="name"><a href="/mypage?uname={{o.user_cd.id}}">{{ o.user_cd.slack_name }}</a></span></p>
+      </div>
+      <div class="last_meta">
+        <div class="time ts">{{o.ts}}</div>
       </div>
       <p>{{o.question_thread}}</p>
+      <div class="sub">
+        <div class="category">{{o.article_cd.category}}</div>
+        <div class="level">{{o.article_cd.level}}</div>
+      </div>
     </div>
     {% else %}
-    <div class="answer_st box">
+    <div class=" answer_st box">
       <div class="answer">
-        <p>回答者 <span class="name">{{o.user_cd.slack_name}}</span></p>
+        <p>回答者 <a href="/mypage?uname={{o.user_cd.id}}">{{ o.user_cd.slack_name }}</a></p>
+        <div class="time ts">{{o.ts}}</div>
       </div>
       <p>{{o.question_thread}}</p>
     </div>

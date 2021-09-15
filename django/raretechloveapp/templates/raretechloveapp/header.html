@@ -4,17 +4,31 @@
   <div class="container common">
     <header>
       <div class="header_inner">
-        <form action="/search" method="GET" class="search">
-          <p>検索記事番号</p>
-          <select name="user_cd" class='selectbox'>
-            <option value=''>全てのユーザー</option>
-            {% for user in all_user %}
-            <option value="{{ user.id }}">{{user.slack_name}}</option>
-            {% endfor %}
-          </select>
-          <input type="number" name="article_cd" value="{{ request.GET.article_cd }}" min="1" max="300">
-          <input type="submit" value="&#xf002;" class="search-button">
-        </form>
+
+        <div class="flex">
+          <a class="sp logo" href="{% url 'index' %}">
+            <img src="{% static 'raretechloveapp/img/logo3.svg' %}" alt="RareTECHLove">
+          </a>
+          <form action="/search" method="GET" class="search">
+            <p>検索記事番号</p>
+            <select name="user_cd" class='selectbox'>
+              <option value=''>全て</option>
+              {% for user in all_user %}
+              <option value="{{ user.id }}">{{user.slack_name}}</option>
+              {% endfor %}
+            </select>
+            <input type="number" name="article_cd" value="{{ request.GET.article_cd }}" min="1" max="300">
+            <input type="submit" value="&#xf002;" class="search-button">
+          </form>
+
+          <div class="hamburger-menu sp">
+            <input type="checkbox" id="menu-btn-check">
+            <label for="menu-btn-check" class="menu-btn"><span></span></label>
+            <div class="menu-content">
+              {% include 'raretechloveapp/aside.html' %}
+            </div>
+          </div>
+        </div>
       </div>
     </header>
     <div class="content">

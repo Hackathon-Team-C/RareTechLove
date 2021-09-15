@@ -135,6 +135,9 @@ class raretechlovesearch(LoginRequiredMixin,ListView):
             context['count'] = QuestionTBL.objects.filter(article_cd =self.request.GET.get('article_cd')).count()
         context['all_user'] = UserMST.objects.all()
         context['user_cd'] =self.request.GET.get('user_cd')
+        context['article_cd'] =self.request.GET.get('article_cd')
+        if context['user_cd'] != '':
+            context['user_slack_name'] =UserMST.objects.get(id=context['user_cd'])
         return context
     def get_queryset(self,**kwargs):
        queryset = super().get_queryset(**kwargs)
