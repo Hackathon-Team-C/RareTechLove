@@ -18,5 +18,13 @@
   <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'raretechloveapp/css/reset.css' %}">
   <link rel="stylesheet" href="{% static 'raretechloveapp/css/style.css' %}">
-  <title>トップページ | RareTECHLove</title>
+  {% if request.path == '/' %}
+  <title>トップページ| RareTECHLove</title>
+  {% elif request.path == '/mypage/' %}
+  <title>{{slack}}のページ| RareTECHLove</title>
+  {% elif request.path == '/search/' %}
+  <title>記事番号「{{article_cd}}」かつ「{{user_slack_name}}」の検索結果| RareTECHLove</title>
+  {% elif request.path == '/post/' %}
+  <title>投稿記事| RareTECHLove</title>
+  {% endif %}
 </head>

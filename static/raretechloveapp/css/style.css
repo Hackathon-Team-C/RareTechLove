@@ -1063,6 +1063,10 @@ html.first body {
     display: none;
   }
 
+  #menu-btn-check:checked ~ .menu-btn {
+    background:#282828;
+  }
+
   .menu-btn {
     position: fixed;
     top: 10px;
@@ -1073,7 +1077,7 @@ html.first body {
     justify-content: center;
     align-items: center;
     z-index: 90;
-    background-color: #292929;
+    background-color: #222121;
   }
   .menu-btn span,
   .menu-btn span:before,
