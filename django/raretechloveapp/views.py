@@ -50,7 +50,7 @@ class raretechlovesignup(TemplateView):
 
         if user is not None:
             login(request, user)
-            slack.import_slack()
+            #slack.import_slack()
             return redirect('/')
         else:
             form.add_error(None, 'そんなslackIDなんて存在しませんよ！！')
