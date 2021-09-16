@@ -43,11 +43,8 @@ services:
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOSTS=mysql
-      - PMA_USER=db-user
-      - PMA_PASSWORD=password
+    env_file:
+      - ./django/.env    
     ports:
       - "3000:80"
     depends_on:

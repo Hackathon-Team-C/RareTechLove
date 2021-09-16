@@ -131,12 +131,12 @@ class raretechlovesearch(LoginRequiredMixin,ListView):
         u = UserMST.objects.get(user_name=self.request.user)
         context['my_slack_name'] =u.slack_name
         keyword = self.request.GET.get('article_cd')
-        if keyword is not '':
+        if keyword is not None:
             context['count'] = QuestionTBL.objects.filter(article_cd =self.request.GET.get('article_cd')).count()
         context['all_user'] = UserMST.objects.all()
         context['user_cd'] =self.request.GET.get('user_cd')
         context['article_cd'] =self.request.GET.get('article_cd')
-        if context['user_cd'] != '':
+        if context['user_cd'] is not None:
             context['user_slack_name'] =UserMST.objects.get(id=context['user_cd'])
         return context
     def get_queryset(self,**kwargs):
@@ -144,13 +144,13 @@ class raretechlovesearch(LoginRequiredMixin,ListView):
 
        keyword = self.request.GET.get('article_cd')
        keyword2 = self.request.GET.get('user_cd')
-       if keyword is not '':
-            if keyword2 is not '':
+       if keyword is not None:
+            if keyword2 is not None:
                 queryset = queryset.filter(article_cd=keyword,user_cd=keyword2,qa_dist=True)
             else:
                 queryset = queryset.filter(article_cd=keyword,qa_dist=True)
        else :
-            if keyword2 is not '':
+            if keyword2 is not None:
                 queryset = queryset.filter(user_cd=keyword2,qa_dist=True)
             else:
                 queryset = queryset.filter(qa_dist=True)

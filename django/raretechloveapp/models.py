@@ -1,12 +1,13 @@
 from django.db import models
-#ユーザー認証
+
+
+# ユーザー認証
 # from django.contrib.auth.models import User
 # from .models import UserMST
 # from .models import ArticleMST
 
 # 利用者マスタ
 class UserMST(models.Model):
-
     # slackユーザーID
     user_name = models.CharField(max_length=255)
     # raretechloveアプリのパスワード
@@ -19,7 +20,6 @@ class UserMST(models.Model):
     # タイトルにSlackの表示名を表示する
     def __str__(self):
         return self.slack_name
-
 
     ## getter
     def get_user_name(self):
@@ -46,7 +46,6 @@ class UserMST(models.Model):
         except:
             return False
 
-
     ## setter
     def set_user_name(self, user_name):
         if user_name is not None:
@@ -69,10 +68,8 @@ class UserMST(models.Model):
             self.save()
 
 
-
 # スプレッドシートマスタ
 class ArticleMST(models.Model):
-
     # カテゴリの選択肢
     CATEGORY_CHOICES = (
         ('PC操作', 'PC操作'),
@@ -100,7 +97,6 @@ class ArticleMST(models.Model):
     def __str__(self):
         return self.article_url
 
-
     ## getter
     def get_article_url(self):
         try:
@@ -120,7 +116,6 @@ class ArticleMST(models.Model):
         except:
             return False
 
-
     ## setter
     def set_article_url(self, article_url):
         if article_url is not None:
@@ -138,10 +133,8 @@ class ArticleMST(models.Model):
             self.save()
 
 
-
 # 難易度テーブル
 class DifficultyTBL(models.Model):
-
     # 記事番号(スプレッドシートマスタから取得)
     article_cd = models.ForeignKey(ArticleMST, on_delete=models.CASCADE)
     # 記事ごとの合計点数(1周目)
@@ -160,7 +153,6 @@ class DifficultyTBL(models.Model):
     # タイトルに記事番号を表示する
     def __str__(self):
         return self.article_cd
-
 
     ## getter
     def get_article_cd(self):
@@ -205,7 +197,6 @@ class DifficultyTBL(models.Model):
         except:
             return False
 
-
     ## setter
     def set_article_cd(self, article_cd):
         if article_cd is not None:
@@ -243,10 +234,8 @@ class DifficultyTBL(models.Model):
             self.save()
 
 
-
 # 質問等回数テーブル
 class QcountTBL(models.Model):
-
     # slackユーザーID(利用者マスタから取得)
     user_cd = models.ForeignKey(UserMST, on_delete=models.CASCADE)
     # Slackの質問回数
@@ -257,7 +246,6 @@ class QcountTBL(models.Model):
     # タイトルにslackユーザーIDを表示する
     def __str__(self):
         return self.user_cd
-
 
     ## getter
     def get_user_cd(self):
@@ -278,7 +266,6 @@ class QcountTBL(models.Model):
         except:
             return False
 
-
     ## setter
     def set_user_cd(self, user_cd):
         if user_cd is not None:
@@ -296,10 +283,8 @@ class QcountTBL(models.Model):
             self.save()
 
 
-
 # 質問回答テーブル
 class QuestionTBL(models.Model):
-
     # タイムスタンプID
     ts_cd = models.BigIntegerField()
     # 記事番号(スプレッドシートマスタから取得)
@@ -309,14 +294,13 @@ class QuestionTBL(models.Model):
     # Slackの質問内容
     question_thread = models.TextField()
     # Slackの投稿日時
-    ts=models.CharField(max_length=100)
+    ts = models.CharField(max_length=100)
     # 質問者(1)・回答者(0)
     qa_dist = models.BooleanField()
 
     # タイトルにSlackの質問者・回答者を表示する
     def __str__(self):
         return self.user_cd
-
 
     ## getter
     def get_ts_cd(self):
@@ -354,7 +338,6 @@ class QuestionTBL(models.Model):
             return self.qa_dist
         except:
             return False
-
 
     ## setter
     def set_ts_cd(self, ts_cd):
