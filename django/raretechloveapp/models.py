@@ -15,7 +15,7 @@ class UserMST(models.Model):
     # Slackの表示名
     slack_name = models.CharField(max_length=255)
     # 300本ノックのスプレッドシートのURL
-    spread_url = models.URLField()
+    spread_url = models.URLField(max_length=2000)
 
     # タイトルにSlackの表示名を表示する
     def __str__(self):
@@ -87,7 +87,7 @@ class ArticleMST(models.Model):
     )
 
     # 記事リンク先URL
-    article_url = models.URLField()
+    article_url = models.URLField(max_length=2000)
     # スプレッドシートでの記事のカテゴリ
     category = models.CharField(max_length=255, verbose_name="カテゴリ", choices=CATEGORY_CHOICES)
     # 記事の難易度
