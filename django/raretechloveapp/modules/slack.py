@@ -11,13 +11,13 @@ def test():
     return 'test'
 
 
-# ユーザーのスラックに応じてカウント
+# ユーザーのスラックに応じて質問数をカウント
 def question_count(user_cd):
     items = QuestionTBL.objects.filter(user_cd=user_cd, qa_dist=True).count()
     return items
 
 
-# ユーザーのスラックに応じてカウント
+# ユーザーのスラックに応じて回答数をカウント
 def answer_count(user_cd):
     items = QuestionTBL.objects.filter(user_cd=user_cd, qa_dist=False).count()
     return items
@@ -164,5 +164,4 @@ def import_slack():
             ts_cd = latast_record
             article_cd = ArticleMST.objects.get(id=ac)
             user_cd = UserMST.objects.get(id=uc)
-            QuestionTBL.objects.filter().create(qa_dist=qa, ts=tsdesu, question_thread=qt, user_cd=user_cd,
-                                                article_cd=article_cd, ts_cd=ts_cd)
+            QuestionTBL.objects.filter().create(qa_dist=qa, ts=tsdesu, question_thread=qt, user_cd=user_cd,article_cd=article_cd, ts_cd=ts_cd)

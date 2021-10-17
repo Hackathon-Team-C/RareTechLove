@@ -1,3 +1,4 @@
+# コマンドを使うために
 from django.core.management.base import BaseCommand
 from django.db.models.fields import NullBooleanField
 import requests
@@ -5,7 +6,9 @@ from django.utils import timezone
 from ...models import QuestionTBL
 from ...models import UserMST
 from ...models import ArticleMST
+# envを取得するために
 import os
+# 置換させるために使う
 import re
 
 
@@ -86,7 +89,6 @@ class Command(BaseCommand):
                     ts_cd = latast_record
                     article_cd = ArticleMST.objects.get(id=ac)
                     user_cd = UserMST.objects.get(id=uc)
-                    QuestionTBL.objects.filter().create(qa_dist=qa, ts=tsdesu, question_thread=qt, user_cd=user_cd,
-                                                        article_cd=article_cd, ts_cd=ts_cd)
+                    QuestionTBL.objects.filter().create(qa_dist=qa, ts=tsdesu, question_thread=qt, user_cd=user_cd,article_cd=article_cd, ts_cd=ts_cd)
 
         get_channel_histry(self)
